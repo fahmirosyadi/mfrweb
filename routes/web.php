@@ -95,7 +95,17 @@ Route::get('/admin/tema', function () {
 });
 Route::post('/api/tema', 'TemaController@update');
 Route::get('/api/tema', 'TemaController@get');
+Route::get('/slink', function() {
+    $target = storage_path("app/public");
+    $linkFolder = $_SERVER['DOCUMENT_ROOT'].'/storage';
+    symlink($target, $linkFolder);
+});
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// DB_DATABASE=u911039425_mydb
+// DB_USERNAME=u911039425_fahmi
+// DB_PASSWORD=myHostingDb26
+
