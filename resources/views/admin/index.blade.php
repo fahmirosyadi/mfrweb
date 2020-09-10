@@ -1,72 +1,7 @@
-@extends('admin/template')
-
-    @section('modal')
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <form method="post" action="/save">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Data</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <input type="hidden" id="id" name="id">
-                <div class="form-group row">
-                    <label for="nama" class="col-sm-3 text-right control-label col-form-label">Nama</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" id="nama" name="nama">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="nama" class="col-sm-3 text-right control-label col-form-label">Alamat</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" id="alamat" name="alamat">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="nama" class="col-sm-3 text-right control-label col-form-label">Angkatan</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" id="angkatan" name="angkatan">
-                    </div>
-                </div>
-                <!-- <input type="hidden" id="csrf1" name="${_csrf.parameterName}" value="${_csrf.token}"> -->
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>
-                <button type="button" id="btn-simpan" class="btn btn-primary">Simpan</button>
-              </div>
-          </form>
-        </div>
-      </div>
-    </div>
-    @endsection
+@extends('layouts/adminlayout')
 
     @section('container')
-        <!-- ============================================================== -->
-        <div class="page-wrapper">
-            <!-- ============================================================== -->
-            <!-- Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
-             <div class="page-breadcrumb">
-                <div class="row">
-                    <div class="col-12 d-flex no-block align-items-center">
-                        <h4 class="page-title">Dashboard</h4>
-                        <div class="ml-auto text-right">
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Library</li>
-                                </ol>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- ============================================================== -->
-            <!-- End Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
+        
             <!-- ============================================================== -->
             <!-- Container fluid  -->
             <!-- ============================================================== -->
@@ -726,22 +661,4 @@
             <!-- ============================================================== -->
             <!-- End Container fluid  -->
             <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- footer -->
-            <!-- ============================================================== -->
-              <footer class="footer text-center">
-                All Rights Reserved by Matrix-admin. Designed and Developed by <a href="https://wrappixel.com">WrapPixel</a>.
-            </footer>
-            <!-- ============================================================== -->
-            <!-- End footer -->
-            <!-- ============================================================== -->
-        </div>
-        <!-- ============================================================== -->
-        <!-- End Page wrapper  -->
-        <!-- ============================================================== -->
-    </div>
-        <!-- ============================================================== -->
-        <!-- End Page wrapper  -->
-        <!-- ============================================================== -->
-    </div>
     @endsection

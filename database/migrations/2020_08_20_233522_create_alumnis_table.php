@@ -19,6 +19,7 @@ class CreateAlumnisTable extends Migration
             $table->string('alamat')->nullable();
             $table->string('foto')->nullable();
             $table->integer('tahun');
+            $table->string('testimoni')->nullable();
             $table->timestamps();
         });
     }

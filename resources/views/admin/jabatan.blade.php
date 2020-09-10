@@ -1,121 +1,83 @@
-@extends('/admin/template')
-    @section('modal')
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <form id="myForm" method="post" action="{{url('/jabatan/simpan')}}">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Data</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <input type="hidden" id="id" name="id">
-                <div class="form-group row">
-                    <label for="jabatan" class="col-sm-3 text-right control-label col-form-label">Jabatan</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" id="nama" name="nama">
-                    </div>
+@extends('/layouts/adminlayout')
+
+@section('modal')
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="myForm" method="post" action="{{url('/jabatan/simpan')}}">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Tambah Data</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="id" name="id">
+            <div class="form-group row">
+                <label for="jabatan" class="col-sm-3 text-right control-label col-form-label">Jabatan</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="nama" name="nama">
                 </div>
-                <!-- <input type="hidden" id="csrf2" name="${_csrf.parameterName}" value="${_csrf.token}"> -->
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>
-                <button type="button" id="btn-simpan" class="btn btn-primary">Simpan</button>
-              </div>
-          </form>
-        </div>
-      </div>
+            </div>
+            <!-- <input type="hidden" id="csrf2" name="${_csrf.parameterName}" value="${_csrf.token}"> -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>
+            <button type="button" id="btn-simpan" class="btn btn-primary">Simpan</button>
+          </div>
+      </form>
     </div>
-    @endsection
-    @section('container')
-        <div class="page-wrapper">
-            <!-- ============================================================== -->
-            <!-- Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
-            <div class="page-breadcrumb">
+  </div>
+</div>
+@endsection
+
+@section('container')
+<!-- ============================================================== -->
+<!-- Container fluid  -->
+<!-- ============================================================== -->
+<div class="container-fluid" id="tabel">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Data</h5>
+            <div class="table-responsive">
                 <div class="row">
-                    <div class="col-12 d-flex no-block align-items-center">
-                        <h4 class="page-title">Tables</h4>
-                        <div class="ml-auto text-right">
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Library</li>
-                                </ol>
-                            </nav>
-                        </div>
+                    <div class="col-sm-12 col-md-6"></div>
+                    <div class="col-sm-12 col-md-6">
+                        <label>
+                            Search:<br>
+                            <input type="search" id="cari" class="form-control form-control-sm">
+                        </label>
                     </div>
                 </div>
+                <table id="zero_config" class="table table-striped table-bordered">
+                    <thead id="tabel-head">
+                        
+                    </thead>
+                    <tbody id="tabel-body">
+                        
+                    </tbody>    
+                </table>
             </div>
-            <!-- ============================================================== -->
-            <!-- End Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- Container fluid  -->
-            <!-- ============================================================== -->
-            <div class="container-fluid" id="tabel">
-                <!-- ============================================================== -->
-                <!-- Start Page Content -->
-                <!-- ============================================================== -->
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Data</h5>
-                        <div class="table-responsive">
-                            <div class="row">
-                                <div class="col-sm-12 col-md-6"></div>
-                                <div class="col-sm-12 col-md-6">
-                                    <label>
-                                        Search:<br>
-                                        <input type="search" id="cari" class="form-control form-control-sm">
-                                    </label>
-                                </div>
-                            </div>
-                            <table id="zero_config" class="table table-striped table-bordered">
-                                <thead id="tabel-head">
-                                    
-                                </thead>
-                                <tbody id="tabel-body">
-                                    
-                                </tbody>    
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <!-- ============================================================== -->
-                <!-- End PAge Content -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- Right sidebar -->
-                <!-- ============================================================== -->
-                <!-- .right-sidebar -->
-                <!-- ============================================================== -->
-                <!-- End Right sidebar -->
-                <!-- ============================================================== -->
-            </div>
-            <!-- ============================================================== -->
-            <!-- End Container fluid  -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- footer -->
-            <!-- ============================================================== -->
-            <footer class="footer text-center">
-                All Rights Reserved by Matrix-admin. Designed and Developed by <a href="https://wrappixel.com">WrapPixel</a>.
-            </footer>
-            <!-- ============================================================== -->
-            <!-- End footer -->
-            <!-- ============================================================== -->
         </div>
-        <!-- ============================================================== -->
-        <!-- End Page wrapper  -->
-        <!-- ============================================================== -->
     </div>
-        <!-- ============================================================== -->
-        <!-- End Page wrapper  -->
-        <!-- ============================================================== -->
-    </div>
-    @endsection
+    <!-- ============================================================== -->
+    <!-- End PAge Content -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Right sidebar -->
+    <!-- ============================================================== -->
+    <!-- .right-sidebar -->
+    <!-- ============================================================== -->
+    <!-- End Right sidebar -->
+    <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Container fluid  -->
+<!-- ============================================================== -->
+@endsection
 
     <!-- <script type="text/javascript">
 

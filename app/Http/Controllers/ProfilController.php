@@ -24,22 +24,43 @@ class ProfilController extends Controller
     public function update(Request $request)
     {
         $profil = Profil::find(1);
-        if ($request->file('foto')) {
-            \Storage::delete($profil->foto);
-            $foto = $request->file('foto')->store('profil');
+        if ($profil) {
+	        if ($request->file('foto')) {
+	            \Storage::delete($profil->foto);
+	            $foto = $request->file('foto')->store('profil');
+	        } else {
+	            $foto = $profil->foto;
+	        }
+	        $request->validate([
+	            'nama' => 'required',
+	            'foto' => 'image|max:2048'
+	        ]);
+	        Profil::where('id', 1)->update([
+	            'nama' => $request->nama,
+	            'alamat' => $request->alamat,
+	            'tahun' => $request->tahun,
+	            'sejarah' => $request->sejarah,
+	            'foto' => $foto
+	        ]);
         } else {
-            $foto = $profil->foto;
+        	$request->validate([
+	            'nama' => 'required',
+	            'foto' => 'image|max:2048'
+	        ]);
+	        if ($request->file('foto')) {
+	            $foto = $request->file('foto')->store('profil');
+	        } else {
+	            $foto = null;
+	        }
+	        Profil::create([
+	            'nama' => $request->nama,
+	            'alamat' => $request->alamat,
+	            'tahun' => $request->tahun,
+	            'sejarah' => $request->sejarah,
+	            'foto' => $foto
+	        ]);
         }
-        $request->validate([
-            'nama' => 'required'
-        ]);
-        Profil::where('id', 1)->update([
-            'nama' => $request->nama,
-            'alamat' => $request->alamat,
-            'tahun' => $request->tahun,
-            'sejarah' => $request->sejarah,
-            'foto' => $foto
-        ]);
         return $request;
     }
 }
+

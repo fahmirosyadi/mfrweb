@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{url('/admin/images/favicon.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{url('/storage/tampilan/logo.png')}}">
     <title>Registrasi</title>
     <!-- Custom CSS -->
     <link href="{{url('/admin/css/style.min.css')}}" rel="stylesheet">

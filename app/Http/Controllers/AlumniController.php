@@ -46,6 +46,7 @@ class AlumniController extends Controller
             'nama' => $request->nama,
             'alamat' => $request->alamat,
             'foto' => $foto,
+            'testimoni' => $request->testimoni,
             'tahun' => $request->tahun
         ]);
         return true;
@@ -69,6 +70,7 @@ class AlumniController extends Controller
             'nama' => $request->nama,
             'alamat' => $request->alamat,
             'tahun' => $request->tahun,
+            'testimoni' => $request->testimoni,
             'foto' => $foto
         ]);
         return true;

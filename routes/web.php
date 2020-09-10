@@ -20,8 +20,17 @@ Route::get('/berita', 'PagesController@berita');
 Route::get('/alumni', 'PagesController@alumni');
 Route::get('/contact', 'PagesController@contact');
 Route::get('/organisasi', 'PagesController@organisasi');
-Route::get('/kegiatan', 'PagesController@kegiatan');
+Route::get('/program', 'PagesController@program');
+Route::get('/ekstra', 'PagesController@ekstra');
 Route::get('/prestasi', 'PagesController@prestasi');
+Route::get('/berita', 'PagesController@berita');
+Route::get('/berita/{id}', 'PagesController@beritaDetails');
+Route::post('/send_email', 'PagesController@contactProcess');
+Route::get('/daftar', 'PagesController@daftar');
+Route::get('/sarana', 'PagesController@sarana');
+Route::get('/sarana/{id}', 'PagesController@detailSarana');
+Route::get('/kurikulum', 'PagesController@kurikulum');
+
 
 Route::get('/admin/periode', 'PeriodeController@index')->middleware('auth');
 Route::prefix('api/periode')->middleware('auth')->group(function() {
@@ -86,13 +95,42 @@ Route::prefix('api/alumni')->middleware('auth')->group(function() {
 	Route::post('{id}', 'AlumniController@update');	
 });
 
+Route::get('/admin/berita', 'BeritaController@index')->middleware('auth');
+Route::get('/admin/berita/create', 'BeritaController@create')->middleware('auth');
+Route::get('/admin/berita/edit/{id}', 'BeritaController@edit')->middleware('auth');
+Route::post('/admin/berita', 'BeritaController@store')->middleware('auth');
+Route::post('/admin/berita/update/{id}', 'BeritaController@update')->middleware('auth');
+Route::prefix('api/berita')->middleware('auth')->group(function() {
+	Route::get('', 'BeritaController@all')->withoutMiddleware('auth');
+	Route::get('detail/{id}', 'BeritaController@show');
+	Route::post('', 'BeritaController@store');
+	Route::get('delete/{id}', 'BeritaController@destroy');
+	Route::post('{id}', 'BeritaController@update');	
+});
+
+Route::get('/admin/user', 'UserController@index')->middleware('auth');
+Route::prefix('api/user')->middleware('auth')->group(function() {
+	Route::get('', 'UserController@all')->withoutMiddleware('auth');
+	Route::get('detail/{id}', 'UserController@show');
+	Route::post('', 'UserController@store');
+	Route::get('delete/{id}', 'UserController@destroy');
+	Route::post('{id}', 'UserController@update');	
+});
+
+
 Route::get('/admin/profil', 'ProfilController@index')->middleware('auth');
 Route::post('/api/profil', 'ProfilController@update')->middleware('auth');
 Route::get('/api/profil', 'ProfilController@get');
 
-Route::get('/admin/tema', function () {
-    return view('admin/tema');
-});
+Route::get('/admin/pengasuh', 'PengasuhController@index')->middleware('auth');
+Route::post('/api/pengasuh', 'PengasuhController@update')->middleware('auth');
+Route::get('/api/pengasuh', 'PengasuhController@get');
+
+Route::get('/sejarah','PagesController@sejarah');
+Route::get('/pengasuh', 'PagesController@pengasuh');
+Route::get('/about', 'PagesController@about');
+
+Route::get('/admin/tema', 'TemaController@index');
 Route::post('/api/tema', 'TemaController@update');
 Route::get('/api/tema', 'TemaController@get');
 Route::get('/slink', function() {
@@ -100,6 +138,8 @@ Route::get('/slink', function() {
     $linkFolder = $_SERVER['DOCUMENT_ROOT'].'/storage';
     symlink($target, $linkFolder);
 });
+
+
 
 Auth::routes();
 

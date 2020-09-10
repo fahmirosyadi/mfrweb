@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Alumni extends Model
 {
-    protected $fillable = ['nama', 'alamat', 'foto', 'tahun'];
+    protected $fillable = ['nama', 'alamat', 'foto', 'tahun','testimoni'];
 }

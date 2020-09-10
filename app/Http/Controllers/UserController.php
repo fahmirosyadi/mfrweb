@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
@@ -22,7 +22,15 @@ class UserController extends Controller
     }
 
     public function index() {
-        return view('admin.user');
+        return view('admin.user-index');
+    }
+
+    public function store() {
+        return User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+        ]);
     }
 
     public function update(Request $request, $id) {
@@ -40,7 +48,7 @@ class UserController extends Controller
 
     public function show($id)
     {
-        return = User::find($id);
+        return User::find($id);
     }
 
     public function destroy($id)

@@ -50,7 +50,7 @@ class KegiatanController extends Controller
             'foto' => $foto,
             'jenis' => $request->jenis
         ]);
-        return true;
+        return $request;
     }
 
     public function update(Request $request, $id)
@@ -72,7 +72,7 @@ class KegiatanController extends Controller
             'foto' => $foto,
             'jenis' => $request->jenis
         ]);
-        return json_encode($request->kegiatan);
+        return $request;
     }
 
     public function destroy($id)

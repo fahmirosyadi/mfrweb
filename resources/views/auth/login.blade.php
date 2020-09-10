@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{url('/admin/images/favicon.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{url('/storage/tampilan/logo.png')}}">
     <title>Login</title>
     <!-- Custom CSS -->
     <link href="{{url('/admin/css/style.min.css')}}" rel="stylesheet">
@@ -40,7 +40,7 @@
             <div class="auth-box bg-dark border-top border-secondary">
                 <div id="loginform">
                     <div class="text-center p-t-20 p-b-20">
-                        <span class="db"><img src="{{url('/admin/images/brand.png')}}" width="200" alt="logo" /></span>
+                        <span class="db"><img src="{{url('/storage/tampilan/logo.png')}}" width="150" alt="logo" /></span>
                     </div>
                     <!-- Form -->
                     <form class="form-horizontal m-t-20" method="POST" action="{{ route('login') }}" id="loginform">
