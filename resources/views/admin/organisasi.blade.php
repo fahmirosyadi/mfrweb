@@ -52,7 +52,7 @@
                             <input class="col" type="file" name="photo1" id="photo1"/>
                         </div>
                         <input type="checkbox" class="form-control" name="hapus">Hapus Foto
-                        <input type="hidden" name="periode" id="periode">
+                        <input type="text" name="periode" id="periode">
                         <div style="padding: 5px 0 15px 0;">
                             <button type="button" style="width:108px;" id="cancel">Cancel</button>
                             <button type="button" style="width:108px;" id="save">Save</button>
@@ -163,6 +163,7 @@
         this.nameInput.value = node.name;
         this.titleInput.value = node.title;
         let pp = document.getElementById('select-periode');
+        alert(pp.value);
         document.getElementById('periode').value = pp.value;
         document.getElementById('photo1').value = "";
         if (node.pid == null) {
@@ -202,7 +203,7 @@
     OrgChart.templates.ana.img_0 = '<image preserveAspectRatio="xMidYMid slice" xlink:href="/storage/{val}" x="20" y="-15" width="80" height="80"></image>';
 
     let chart;
-    async function loadChart() {       	
+    async function loadChart(awal) {       	
         chart = new OrgChart(document.getElementById("tree"), {
         	mouseScrool: OrgChart.action.none,
             lazyLoading: true,
@@ -239,23 +240,29 @@
             }
         });
     	let pilihPeriode = document.getElementById('select-periode');
-    	let dataLoad = await mf.getData('/api/organisasi/' + pilihPeriode.value);
-        	for (let i = 0; i < dataLoad.length; i++) {
-        		dataLoad[i].tags = [dataLoad[i].tags];
-                let photo1 = "organisasi/default.jpg";
-                if (dataLoad[i].photo1 != null) {
-                    photo1 = dataLoad[i].photo1;
-                }
-                let hasil = {
-                    id: dataLoad[i].id,
-                    name: dataLoad[i].name,
-                    title: dataLoad[i].title,
-                    pid: dataLoad[i].pid,
-                    photo1: photo1,
-                    tags: dataLoad[i].tags
-                }
-        		chart.add(hasil);
-        	}
+    	let dataLoad = "";
+        if (awal == true) {
+            dataLoad = await mf.getData('/api/organisasi/' +  new Date().getFullYear());    
+        }else{
+            dataLoad = await mf.getData('/api/organisasi/' + pilihPeriode.value);
+        }
+
+    	for (let i = 0; i < dataLoad.length; i++) {
+    		dataLoad[i].tags = [dataLoad[i].tags];
+            let photo1 = "organisasi/default.jpg";
+            if (dataLoad[i].photo1 != null) {
+                photo1 = dataLoad[i].photo1;
+            }
+            let hasil = {
+                id: dataLoad[i].id,
+                name: dataLoad[i].name,
+                title: dataLoad[i].title,
+                pid: dataLoad[i].pid,
+                photo1: photo1,
+                tags: dataLoad[i].tags
+            }
+    		chart.add(hasil);
+    	}
 
     	chart.draw(OrgChart.action.init);
     }
@@ -267,6 +274,8 @@
     pilihPeriode.addEventListener('change', function() {
         loadChart();
     })
+
+    loadChart(true);
     
 </script>
 @endsection

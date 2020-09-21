@@ -14,6 +14,7 @@
                 @csrf
                 <div class="card-body">
                     <h4 class="card-title">Profil</h4>
+                    <div id="notif"></div>
                     <div class="form-group">
                         <label for="nama">Nama Pondok</label>
                         <input type="text" id="nama" name="nama" class="form-control">
@@ -121,6 +122,7 @@
     let sejarah = document.getElementById('sejarah');
     let foto = document.getElementById('foto');
     let foto2 = document.getElementById('foto2');
+    let notif = document.getElementById('notif');
 
     let btnSimpan = document.getElementById('btn-simpan');
     let btnReset = document.getElementById('btn-reset');
@@ -129,12 +131,21 @@
         let mForm = document.getElementById('myForm');
         let dataForm = new FormData(myForm);
         console.log(dataForm);
-        let update = await mf.postData(mForm.action, dataForm);
-        if (update != null) {
-            alert("Berhasil disimpan");
+        let status = await mf.postData(myForm.action, dataForm);
+        if (status == true) {
+            notif.innerHTML = `
+                <div class="alert alert-success">Berhasil disimpan</div>
+            `;
+            window.scroll({top:0, behavior: 'smooth'});
             loadData();
-        }else {
-            alert("Gagal diterapkan");
+        }else{
+            notif.innerHTML = "";
+            for(let i = 0; i < status.length; i++){
+                notif.innerHTML += `
+                    <div class="alert alert-danger">${status[i]}</div>
+                `;
+            }
+            window.scroll({top:0, behavior: 'smooth'});
         }
     });
 

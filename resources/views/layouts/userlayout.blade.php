@@ -7,7 +7,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <link rel="icon" href="{{ url('/storage/tampilan/logo.png') }}" type="image/png" />
+    <link rel="icon" href="{{ url('/storage/'.$tema->logo) }}" type="image/png" />
     <title>Ponpes KH. Ahmad Dahlan : {{ $title }}</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{url('/user2/css/bootstrap.css')}}" />
@@ -29,33 +29,52 @@
         /*font-family: britannic bold;*/
       }
       .brand-text{
-        font-size: 10px;
-        position: absolute; 
-        margin-left: 70px;
-        margin-top: 30px;
-        padding-top: 2px;
+        font-size: 15px;
+        margin-left: 22px;
+        position: relative;
+      }
+      .arrow{
+        margin-left: 50px;
+        margin-top: 13px;
+        width: 200px;
+        position: absolute;
+        clip-path: polygon(0% 0%, 80% 0%, 100% 50%, 80% 100%, 0% 100%);
       }
 
+      @media (min-width: 992px) {
+        #container-judul{
+          margin-top:70px;
+        }
+        #container-judul h2{
+           margin-top: 0.5em;
+        }
       }
+
+      @media (max-width: 575.98px) {
+        #container-judul{
+          font-size: 7px;
+        }
+      }
+
     </style>
     
   </head>
 
   <body>
-
-
     <!--================ Start Header Menu Area =================-->
     <header class="header_area white-header" id="header">
       <div class="main_menu">
         <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #002347">
           <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
-            <a class="navbar-brand" style="width: 240px;" href="index.html">
-              <img src="{{url('/storage/tampilan/brand.png')}}" style="float:left; position: relative;" height="80" alt=""/>
-              <div class="p-2 mt-2 brand-text" style="">
-                <h6 style="margin-top: 2px">PONDOK PESANTREN</h6>
-                <h6>KH. AHMAD DAHLAN</h6>
-                <h6>SIPIROK</h6>
+            <a class="navbar-brand" style="width: 240px;" href="{{ url('/') }}">
+              <img src="{{url('/storage/'.$tema->logo)}}" style="float:left; position: relative; z-index: 100;" height="80" alt=""/>
+              <div class="arrow bg-warning" style="border: solid green;">
+                <div class="pl-2 mt-1 brand-text" id="judul" style="">
+                  <h6>PONDOK PESANTREN</h6>
+                  <h6>KH. AHMAD DAHLAN</h6>
+                  <h6>SIPIROK</h6>
+                </div>
               </div>
             </a>
             <button
@@ -136,9 +155,9 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{{url('/berita')}}">Berita</a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                   <a class="nav-link" href="{{url('/daftar')}}">Daftar</a>
-                </li>
+                </li> -->
                 <li class="nav-item">
                   <a class="nav-link" href="{{url('/contact')}}">Contact</a>
                 </li>
@@ -161,48 +180,33 @@
           <div class="col-lg-3 col-md-6 single-footer-widget">
             <h4>Tentang</h4>
             <ul>
-              <li><a href="#">Sejarah</a></li>
-              <li><a href="#">Pengasuh</a></li>
-              <li><a href="#">Organisasi</a></li>
+              <li><a href="{{ url('/sejarah') }}">Sejarah</a></li>
+              <li><a href="{{ url('/pengasuh') }}">Pengasuh</a></li>
+              <li><a href="{{ url('/organisasi') }}">Organisasi</a></li>
             </ul>
           </div>
           <div class="col-lg-3 col-md-6 single-footer-widget">
-            <h4>Link Pintasan</h4>
+            <h4>Link</h4>
             <ul>
-              <li><a href="#">Jobs</a></li>
-              <li><a href="#">Brand Assets</a></li>
-              <li><a href="#">Investor Relations</a></li>
-              <li><a href="#">Terms of Service</a></li>
-            </ul>
-          </div>
-          <div class="col-lg-3 col-md-6 single-footer-widget">
-            <h4>Features</h4>
-            <ul>
-              <li><a href="#">Jobs</a></li>
-              <li><a href="#">Brand Assets</a></li>
-              <li><a href="#">Investor Relations</a></li>
-              <li><a href="#">Terms of Service</a></li>
+              <li><a href="https://web.facebook.com/Pondok-Pesantren-Muhammadiyah-KH-Ahmad-Dahlan-Sipirok-157350531103288/">Facebook</a></li>
+              <li><a href="http://pubpasim.org">PUB Pasim</a></li>
             </ul>
           </div>
           <div class="col-lg-3 col-md-6 single-footer-widget">
             <h4>Contact</h4>
             <ul>
-              <li>
-                <i class="ti-home"></i>
-                <a href="#">00 (440) 9865 562</a>
-              </li>
+              @foreach($contact as $row)
               <li>
                 <i class="ti-email"></i>
-                <a href="#">00 (440) 9865 562</a>
+                <a href="#">{{ $row->contact }} ({{ $row->nama }})</a>
               </li>
-              <li>
-                <i class="ti-headphone"></i>
-                <a href="#">00 (440) 9865 562</a>
-              </li>
-              <li>
-                <i class="ti-whatsapp"></i>
-                <a href="#">00 (440) 9865 562</a>
-              </li>
+              @endforeach
+            </ul>
+          </div>
+          <div class="col-lg-3 col-md-6 single-footer-widget">
+            <h4>Website Creator</h4>
+            <ul>
+              <li><a href="#">PUB Team</a></li>
             </ul>
           </div>
         </div>
@@ -212,12 +216,12 @@
 Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
           </p>
-          <div class="col-lg-4 col-sm-12 footer-social">
+          <!-- <div class="col-lg-4 col-sm-12 footer-social">
             <a href="#"><i class="ti-facebook"></i></a>
             <a href="#"><i class="ti-twitter"></i></a>
             <a href="#"><i class="ti-dribbble"></i></a>
             <a href="#"><i class="ti-linkedin"></i></a>
-          </div>
+          </div> -->
         </div>
       </div>
     </footer>

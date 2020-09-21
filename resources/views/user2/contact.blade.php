@@ -1,34 +1,30 @@
 @extends('layouts/userlayout1')
 
 @section('container2')
-<div
+<!-- <div
   id="mapBox"
   class="mapBox"
-  data-lat="1.611050"
-  data-lon="99.247860"
-  data-zoom="13"
+  data-lat="1.5883284"
+  data-lon="99.2894046"
+  data-zoom="15"
   data-info="Pondok Pesantren KH. Ahmad Dahlan Sipirok"
-  data-mlat="1.611050"
-  data-mlon="99.247860"
-></div>
+  data-mlat="1.5883284"
+  data-mlon="99.2894046"
+></div> -->
 <div class="row">
   <div class="col-lg-3">
     <div class="contact_info">
-      <div class="info_item">
+      <div class="info_item mb-5">
         <i class="ti-home"></i>
-        <h6>California, United States</h6>
-        <p>Santa monica bullevard</p>
+        <h6>{{ $profil->alamat }}</h6>
       </div>
-      <div class="info_item">
-        <i class="ti-headphone"></i>
-        <h6><a href="#">00 (440) 9865 562</a></h6>
-        <p>Mon to Fri 9am to 6 pm</p>
-      </div>
+      @foreach($contact as $row)
       <div class="info_item">
         <i class="ti-email"></i>
-        <h6><a href="#">support@colorlib.com</a></h6>
-        <p>Send us your query anytime!</p>
+        <h6><a href="#">{{ $row->contact }}</a></h6>
+        <p>{{ $row->nama }}</p>
       </div>
+      @endforeach
     </div>
   </div>
   <div class="col-lg-9">

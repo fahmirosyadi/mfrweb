@@ -10,29 +10,28 @@
     <!-- ============================================================== -->
     <div class="row">
         <div class="col-md-12">
-            <form id="myForm" enctype="multipart/form-data" method="POST" action="{{url('/api/pengasuh')}}"  class="card">
+            <form id="myForm" enctype="multipart/form-data" method="POST" action="{{url('/api/user/updatePassword/'. auth()->user()->id )}}"  class="card">
                 @csrf
                 <div class="card-body">
-                    <h4 class="card-title">Pengasuh</h4>
+                    <h4 class="card-title">Ubah Password</h4>
                     <div id="notif"></div>
+                    <input type="hidden" id="idUser" value="{{ $idUser }}">
                     <div class="form-group">
-                        <label for="nama">Nama</label>
-                        <input type="text" id="nama" name="nama" class="form-control">
+                        <label for="old-password">Password Lama</label>
+                        <input type="password" id="old-password" name="old-password" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="alamat">Foto</label>
-                        <img class="d-block mb-3" src="" height="100" width="100" id="foto2">
-                        <input type="file" id="foto" name="foto" class="form-control">
+                        <label for="password">Password Baru</label>
+                        <input type="password" id="password" name="password" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="sambutan">Sambutan</label>
-                        <textarea type="text" id="sambutan" class="form-control"></textarea>
+                        <label for="password_confirmation">Konfirmasi Password Baru</label>
+                        <input type="password" id="password_confirmation" name="password_confirmation" class="form-control">
                     </div>
                 </div>
                 <div class="border-top">
                     <div class="card-body">
                         <button type="button" id="btn-simpan" class="btn btn-success">Simpan</button>
-                        <button type="button" id="btn-reset" class="btn btn-primary">Reset</button>
                     </div>
                 </div>
             </form>
@@ -111,10 +110,10 @@
     let mf = new MyFetch();
 
     let id = document.getElementById('id');
-    let nama = document.getElementById('nama');
-    let sambutan = document.getElementById('sambutan');
-    let foto = document.getElementById('foto');
-    let foto2 = document.getElementById('foto2');
+    let idUser = document.getElementById('idUser');
+    let oldPassword = document.getElementById('old-password');
+    let password = document.getElementById('password');
+    let passwordConfirmation = document.getElementById('password_confirmation');
     let notif = document.getElementById('notif');
 
     let btnSimpan = document.getElementById('btn-simpan');
@@ -123,14 +122,15 @@
     btnSimpan.addEventListener('click', async function() {
         let mForm = document.getElementById('myForm');
         let dataForm = new FormData(myForm);
-        console.log(dataForm);
-        dataForm.append('sambutan', CKEDITOR.instances['sambutan'].getData());
         let status = await mf.postData(myForm.action, dataForm);
         if (status == true) {
             notif.innerHTML = `
                 <div class="alert alert-success">Berhasil disimpan</div>
             `;
             window.scroll({top:0,behavior: 'smooth'});
+            oldPassword.value = '';
+            password.value = '';
+            passwordConfirmation.value = '';
             loadData();
         }else{
             notif.innerHTML = "";
@@ -145,14 +145,14 @@
 
 
     function isi(data) {
-        nama.value = data.nama;
-        sambutan.value = data.sambutan;
+        nama.value = data.name;
+        email.value = data.email;
         foto.value = "";
         foto2.src = "/storage/" + data.foto;
     }
 
     async function loadData() {
-        let data = await mf.getData('/api/pengasuh');
+        let data = await mf.getData('/api/user/detail/' + idUser.value);
         isi(data);
     }
     loadData();

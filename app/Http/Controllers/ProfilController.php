@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Profil;
+use App\Theme;
+use Illuminate\Support\Facades\Validator;
 
 class ProfilController extends Controller
 {
     public function index()
     {
-        return view('admin.profil');
+        return view('admin.profil',['tema' => Theme::find(1), 'title' => 'Profil']);
     }
 
 
@@ -23,6 +25,14 @@ class ProfilController extends Controller
 
     public function update(Request $request)
     {
+        $validator = Validator::make($request->all(),[
+            'nama' => 'required',
+            'tahun' => 'required|numeric',
+            'foto' => 'image|max:2048'
+        ]);
+        if ($validator->fails()) {
+        	return $validator->errors()->all();
+        }
         $profil = Profil::find(1);
         if ($profil) {
 	        if ($request->file('foto')) {
@@ -31,10 +41,6 @@ class ProfilController extends Controller
 	        } else {
 	            $foto = $profil->foto;
 	        }
-	        $request->validate([
-	            'nama' => 'required',
-	            'foto' => 'image|max:2048'
-	        ]);
 	        Profil::where('id', 1)->update([
 	            'nama' => $request->nama,
 	            'alamat' => $request->alamat,
@@ -43,10 +49,6 @@ class ProfilController extends Controller
 	            'foto' => $foto
 	        ]);
         } else {
-        	$request->validate([
-	            'nama' => 'required',
-	            'foto' => 'image|max:2048'
-	        ]);
 	        if ($request->file('foto')) {
 	            $foto = $request->file('foto')->store('profil');
 	        } else {
@@ -60,7 +62,7 @@ class ProfilController extends Controller
 	            'foto' => $foto
 	        ]);
         }
-        return $request;
+        return true;
     }
 }
 

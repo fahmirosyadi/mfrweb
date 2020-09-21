@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Pengurus;
+use App\Theme;
 
 class PengurusController extends Controller
 {
     public function index()
     {
-        return view('admin.pengurus');
+        return view('admin.pengurus',['tema' => Theme::find(1), 'title' => 'Pengurus']);
     }
 
 

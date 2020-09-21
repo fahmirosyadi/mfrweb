@@ -13,6 +13,7 @@
             </button>
           </div>
           <div class="modal-body">
+            <div id="notif"></div>
             <input type="hidden" id="id" name="id">
             <div class="form-group row">
                 <label for="nama" class="col-sm-3 text-right control-label col-form-label">Mapel</label>
@@ -92,6 +93,8 @@
     let mf = new MyFetch();
     let mapel = document.getElementById('mapel');
     let jenis = document.getElementById('jenis');
+    let notif = document.getElementById('notif');
+    let cari = document.getElementById('cari');
 
     function isi(data2) {
         let thead = document.getElementById('tabel-head');
@@ -136,13 +139,18 @@
     btnSimpan.addEventListener('click', async function() {
         let myForm = document.getElementById('myForm');
         let dataForm = new FormData(myForm);
-        let simpan = await mf.postData(myForm.action, dataForm);
-        if (simpan) {
+        let status = await mf.postData(myForm.action, dataForm);
+        if (status == true) {
             loadData();
+            $('#exampleModal').modal('hide');
         }else{
-            alert('Gagal menyimpan');
+            notif.innerHTML = "";
+            for(let i = 0; i < status.length; i++){
+                notif.innerHTML += `
+                    <div class="alert alert-danger">${status[i]}</div>
+                `;
+            }
         }
-        $('#exampleModal').modal('hide');
     })
 
     document.addEventListener('click',async function(e) {
@@ -152,6 +160,7 @@
             myForm.setAttribute('action', '/api/kurikulum');
             id.value = "";
             mapel.value = "";
+            notif.innerHTML = "";
             jenis.value = document.getElementById('select-jenis').value;
         }
     });
@@ -176,10 +185,21 @@
             let idKurikulum = e.target.dataset.id;
             let dataKurikulum = await mf.getData('/api/kurikulum/detail/' + idKurikulum);
             id.value = dataKurikulum.id;
+            notif.innerHTML = "";
             mapel.value = dataKurikulum.mapel;
             jenis.value = dataKurikulum.jenis;
             let myForm = document.getElementById('myForm');
             myForm.setAttribute('action', '/api/kurikulum/' + dataKurikulum.id);
+        }
+    });
+
+    cari.addEventListener('keyup', async function() {
+        if (cari.value == '') {
+            loadData();
+        }else{
+            let jenis = document.getElementById('select-jenis').value;
+            let hasil = await mf.getData('/api/kurikulum/search/' + jenis + '/' + cari.value);
+            isi(hasil);
         }
     });
 

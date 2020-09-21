@@ -18,16 +18,25 @@
                             <label for="judul">Judul</label>
                             <input value="{{ $berita->judul }}" type="text" id="judul" name="judul" class="form-control">
                         </div>
+                        @error('judul')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                         <div class="form-group">
                             <textarea type="text" id="berita" name="berita" class="form-control">
                                 {{ $berita->berita }}   
                             </textarea>
                         </div>
+                        @error('berita')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                         <div class="form-group">
                             <label for="alamat">Foto</label>
                             <img class="d-block mb-3" src="{{url('/storage/'.$berita->foto)}}" height="100" width="100" id="foto2">
                             <input type="file" id="foto" name="foto" class="form-control">
                         </div>
+                        @error('foto')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="border-top">
                         <div class="card-body">
@@ -110,55 +119,6 @@
         jQuery('#datepicker-autoclose').datepicker({
             autoclose: true,
             todayHighlight: true
-        });
-
-
-        let mf = new MyFetch();
-
-        let id = document.getElementById('id');
-        let berita = document.getElementById('berita');
-        let foto = document.getElementById('foto');
-        let foto2 = document.getElementById('foto2');
-
-        let btnSimpan = document.getElementById('btn-simpan');
-        let btnReset = document.getElementById('btn-reset');
-
-        btnSimpan.addEventListener('click', async function() {
-            let mForm = document.getElementById('myForm');
-            let dataForm = new FormData(myForm);
-            console.log(dataForm);
-            let update = await mf.postData(mForm.action, dataForm);
-            if (update != null) {
-                alert("Berhasil disimpan");
-                loadData();
-            }else {
-                alert("Gagal diterapkan");
-            }
-        });
-
-
-        function isi(data) {
-            let listBerita = document.getElementById('listBerita');
-            listBerita.innerHTML = "";
-            for (var i = 0; i < data.length; i++) {
-	            listBerita.innerHTML += ``;
-            }
-        }
-
-        async function loadData() {
-            let data = await mf.getData('/api/berita');
-            isi(data);
-        }
-        loadData();
-
-        document.addEventListener('click', async function(e) {
-        	if (e.target.classList.contains('btn-edit')) {
-        		let data = await mf.getData('/api/berita/detail/' + e.target.dataset.id);
-        		console.log(data);
-        		id.value = data.id;
-        		berita.innerHTML = data.berita;
-        		foto2.src = "/storage/" + data.foto;
-        	}
         });
 
     </script>

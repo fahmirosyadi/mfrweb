@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Organisasi;
+use App\Theme;
 
 class OrganisasiController extends Controller
 {
 
     public function index()
     {
-        return view('admin.organisasi');
+        return view('admin.organisasi',['tema' => Theme::find(1), 'title' => 'Organisasi']);
     }
 
 
@@ -52,7 +53,7 @@ class OrganisasiController extends Controller
             'photo1' => $photo1,
             'pid' => $request->pid,
             'tags' => $request->tags,
-            'periode_id' => $request->periode
+            'periode' => $request->periode
         ]);
         return ['status' => 'ok'];
     }
@@ -77,7 +78,7 @@ class OrganisasiController extends Controller
             'photo1' => $photo1,
             'pid' => $request->pid,
             'tags' => $request->tags,
-            'periode_id' => $request->periode
+            'periode' => $request->periode
         ]);
         return ['status' => 'ok'];
     }

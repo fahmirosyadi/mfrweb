@@ -3,70 +3,69 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Prestasi;
+use App\Contact;
 use App\Theme;
 use Illuminate\Support\Facades\Validator;
 
-class PrestasiController extends Controller
+class ContactController extends Controller
 {
 
     public function index()
     {
-        return view('admin.prestasi',['tema' => Theme::find(1), 'title' => 'Prestasi']);
+        return view('admin.contact',['tema' => Theme::find(1), 'title' => 'Contact']);
     }
 
 
     // RestController
     public function all()
     {
-        $data = Prestasi::all();
+        $data = Contact::all();
         return $data;
     }
 
     public function show($id)
     {
-        $hasil = Prestasi::find($id);
-        return json_encode($hasil);
+        $hasil = Contact::find($id);
+        return $hasil;
     }
 
     public function store(Request $request)
     {
     	$validator = Validator::make($request->all(),[
-            'kegiatan' => 'required',
-    		'prestasi' => 'required'
+            'nama' => 'required',
+    		'contact' => 'required'
     	]);
         if ($validator->fails()) {
             return $validator->errors()->all();
         }
-        Prestasi::create($request->all());
+        Contact::create($request->all());
         return true;
     }
 
     public function update(Request $request, $id)
     {
     	$validator = Validator::make($request->all(),[
-            'kegiatan' => 'required',
-            'prestasi' => 'required'
+            'nama' => 'required',
+            'contact' => 'required'
         ]);
         if ($validator->fails()) {
             return $validator->errors()->all();
         }
-        Prestasi::where('id', $id)->update([
-            'kegiatan' => $request->kegiatan,
-            'prestasi' => $request->prestasi,
-            'tahun' => $request->tahun,
+        Contact::where('id', $id)->update([
+            'nama' => $request->nama,
+            'contact' => $request->contact,
         ]);
         return true;
     }
 
     public function destroy($id)
     {
-        Prestasi::destroy($id);
+        Contact::destroy($id);
         return true;
     }
 
     public function search($s){
-        return Prestasi::where('prestasi','like','%'.$s.'%')->orWhere('kegiatan','like','%'.$s.'%')->orWhere('tahun','like','%'.$s.'%')->get();
+        return Contact::where('nama','like','%'.$s.'%')->orWhere('contact','like','%'.$s.'%')->get();
     }
 
 

@@ -14,56 +14,34 @@
                 @csrf
                 <div class="card-body">
                     <h4 class="card-title">Tema</h4>
+                    <div id="notif"></div>
                     <div class="form-group">
-                        <label for="judul">Judul</label>
-                        <input type="text" id="judul" name="judul" class="form-control">
+                        <label for="judul2">Judul Baris ke-1</label>
+                        <input type="text" id="judul2" name="judul" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="judul">Background 1</label>
+                        <label for="judul3">Judul Baris ke-2 (Optional)</label>
+                        <input type="text" id="judul3" name="judul2" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="logo">Logo</label>
+                        <img src="" id="gambar-logo" height="100" width="100" class="d-block mb-3">
+                        <input type="file" id="logo" name="logo" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="bg1">Background 1</label>
                         <img src="" id="gambar1" height="100" width="100" class="d-block mb-3">
                         <input type="file" id="bg1" name="bg1" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="judul">Background 2</label>
+                        <label for="bg2">Background 2</label>
                         <img src="" id="gambar2" height="100" width="100" class="d-block mb-3">
                         <input type="file" id="bg2" name="bg2" class="form-control">
                     </div>
-                    <div class="form-group">
-                        <label for="judul">Style</label>
-                        <select id="tema" name="tema" class="form-control">
-                        </select>
-                    </div>
-                    <!-- <div class="form-group">
-                        <label for="hue-demo">Hue</label>
-                        <input type="text" id="hue-demo" class="form-control demo" data-control="hue" value="#ff6161">
-                    </div>
-                    <div class="form-group">
-                        <label for="position-bottom-left">Bottom left (default)</label>
-                        <input type="text" id="position-bottom-left" class="form-control demo" data-position="bottom left" value="#0088cc">
-                    </div>
-                    <div class="form-group">
-                        <label for="position-top-right">Top right</label>
-                        <input type="text" id="position-top-right" class="form-control demo" data-position="top right" value="#0088cc">
-                    </div>
-                    <label>Datepicker</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control mydatepicker" placeholder="mm/dd/yyyy">
-                        <div class="input-group-append">
-                            <span class="input-group-text"><i class="fa fa-calendar"></i></span>
-                        </div>
-                    </div>
-                    <label class="m-t-15">Autoclose Datepicker</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="datepicker-autoclose" placeholder="mm/dd/yyyy">
-                        <div class="input-group-append">
-                            <span class="input-group-text"><i class="fa fa-calendar"></i></span>
-                        </div>
-                    </div> -->
                 </div>
                 <div class="border-top">
                     <div class="card-body">
                         <button type="button" id="btn-simpan" class="btn btn-success">Terapkan</button>
-                        <button type="button" id="btn-reset" class="btn btn-primary">Reset</button>
                     </div>
                 </div>
             </form>
@@ -136,15 +114,20 @@
     });
 
 
+    
     let mf = new MyFetch();
 
     let id = document.getElementById('id');
-    let judul = document.getElementById('judul');
+    let judul = document.getElementById('judul2');
+    let judul2 = document.getElementById('judul3');
     let bg1 = document.getElementById('bg1');
     let bg2 = document.getElementById('bg2');
+    let logo = document.getElementById('logo');
     let gambar1 = document.getElementById('gambar1');
     let gambar2 = document.getElementById('gambar2');
+    let gambarLogo = document.getElementById('gambar-logo');
     let tema = document.getElementById('tema');
+    let notif = document.getElementById('notif');
 
     let btnSimpan = document.getElementById('btn-simpan');
     let btnReset = document.getElementById('btn-reset');
@@ -154,30 +137,33 @@
         let dataForm = new FormData(myForm);
         console.log(dataForm);
         let update = await mf.postData(mForm.action, dataForm);
-        if (update != null) {
-            alert("Berhasil diterapkan");
+        if (update == true) {
+            notif.innerHTML = `
+                <div class="alert alert-success" role="alert">Berhasil diterapkan</div>
+            `
+            window.scroll({top: 0, behavior: 'smooth'});
             loadData();
         }else {
-            alert("Gagal diterapkan");
+            notif.innerHTML = "";
+            for(let i = 0; i < update.length; i++){
+                notif.innerHTML += `
+                    <div class="alert alert-danger" role="alert">${update[i]}</div>
+                `
+
+            }
+            window.scroll({top: 0,behavior: 'smooth'});
         }
     });
 
-
     function isi(data) {
         judul.value = data.judul;
+        judul2.value = data.judul2;
         bg1.value = "";
         bg2.value = "";
+        logo.value = "";
         gambar1.src = "/storage/" + data.bg1;
         gambar2.src = "/storage/" + data.bg2;
-        tema.innerHTML = "";
-        let temaDefault = ["tema1","tema2"];
-        for (var i = 0; i < temaDefault.length; i++) {
-            if (temaDefault[i] == data.tema) {
-                tema.innerHTML += `<option selected>${temaDefault[i]}</option>`;
-            } else {
-                tema.innerHTML += `<option>${temaDefault[i]}</option>`;
-            }
-        }
+        gambarLogo.src = "/storage/" + data.logo;
     }
 
     async function loadData() {

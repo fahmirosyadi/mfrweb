@@ -14,6 +14,7 @@
             </button>
           </div>
           <div class="modal-body">
+            <div id="notif"></div>
             <input type="hidden" id="id" name="id">
             <input type="hidden" name="jenis" id="jenis">
             <div class="form-group row">
@@ -115,13 +116,15 @@
     let foto = document.getElementById('foto');
     let foto2 = document.getElementById('foto2');
     let jenis = document.getElementById('jenis');
+    let notif = document.getElementById('notif');
+    let cari = document.getElementById('cari');
 
       function isi(data2) {
         let thead = document.getElementById('tabel-head');
         thead.innerHTML = `
             <tr>
                 <th style="text-align: center;" scope="col">No</th>
-                <th style="text-align: center;" scope="col">Kegiatan</th>
+                <th style="text-align: center;" scope="col">Program</th>
                 <th style="text-align: center;" scope="col">Foto</th>
                 <th style="text-align: center;" scope="col">
                     <a data-toggle="modal" data-target="#exampleModal" id="btn-tambah" class="btn btn-primary text-white mt-2 btn-tambah">Tambah</a>
@@ -167,13 +170,18 @@
     btnSimpan.addEventListener('click', async function() {
         let myForm = document.getElementById('myForm');
         let dataForm = new FormData(myForm);
-        let simpan = await mf.postData(myForm.action, dataForm);
-        if (simpan) {
+        let status = await mf.postData(myForm.action, dataForm);
+        if (status == true) {
             loadData();
+            $('#exampleModal').modal('hide');
         }else{
-            alert('Gagal menyimpan');
+            notif.innerHTML = "";
+            for(let i = 0; i < status.length; i++){
+                notif.innerHTML += `
+                    <div class="alert alert-danger">${status[i]}</div>
+                `;
+            }
         }
-        $('#exampleModal').modal('hide');
     })
 
     document.addEventListener('click',async function(e) {
@@ -184,6 +192,7 @@
             id.value = "";
             kegiatan.value = "";
             keterangan.value = "";
+            notif.innerHTML = "";
             foto.value = "";
             foto2.src = "/storage/kegiatan/default.jpg";
             jenis.value = document.getElementById('select-jenis').value;
@@ -214,6 +223,7 @@
             kegiatan.value = dataKegiatan.kegiatan;
             keterangan.value = dataKegiatan.keterangan;
             jenis.value = dataKegiatan.jenis;
+            notif.innerHTML = "";
             foto.value = "";
             if (dataKegiatan.foto != null) {
                 foto2.src = '/storage/' + dataKegiatan.foto;
@@ -222,6 +232,16 @@
             }
             let myForm = document.getElementById('myForm');
             myForm.setAttribute('action', '/api/kegiatan/' + dataKegiatan.id);
+        }
+    });
+
+    cari.addEventListener('keyup',async function(){
+        if (cari.value == '') {
+            loadData();
+        }else{
+            let jenis = document.getElementById('select-jenis').value;
+            let hasil = await mf.getData('/api/kegiatan/search/' + jenis + '/' + cari.value);
+            isi(hasil);
         }
     });
 

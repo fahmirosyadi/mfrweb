@@ -11,7 +11,7 @@
       <div class="blog_right_sidebar">
           <aside class="single_sidebar_widget search_widget">
               <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Search Posts">
+                  <input type="text" class="form-control" id="cari" placeholder="Cari">
                   <span class="input-group-btn">
                       <button class="btn btn-default" type="button"><i class="ti-search"></i></button>
                   </span>
@@ -55,5 +55,6 @@
       </div>
   </div>
 </div>
+@yield('js')
 @endsection
-  
+

@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Kegiatan;
+use App\Theme;
+use Illuminate\Support\Facades\Validator;
 
 class KegiatanController extends Controller
 {
 
     public function index()
     {
-        return view('admin.kegiatan');
+        return view('admin.kegiatan',['tema' => Theme::find(1), 'title' => 'Program']);
     }
 
 
@@ -35,10 +37,13 @@ class KegiatanController extends Controller
 
     public function store(Request $request)
     {
-    	$request->validate([
+    	$validator = Validator::make($request->all(),[
     		'kegiatan' => 'required',
             'foto' => 'image|max:2048'
     	]);
+        if ($validator->fails()) {
+            return $validator->errors()->all();
+        }
         if ($request->file('foto')) {
             $foto = $request->file('foto')->store('kegiatan');
         } else {
@@ -50,11 +55,18 @@ class KegiatanController extends Controller
             'foto' => $foto,
             'jenis' => $request->jenis
         ]);
-        return $request;
+        return true;
     }
 
     public function update(Request $request, $id)
     {
+    	$validator = Validator::make($request->all(),[
+            'kegiatan' => 'required',
+            'foto' => 'image|max:2048'
+        ]);
+        if ($validator->fails()) {
+            return $validator->errors()->all();
+        }
         $kegiatan = Kegiatan::find($id);
         if ($request->file('foto')) {
             \Storage::delete($kegiatan->foto);
@@ -62,17 +74,13 @@ class KegiatanController extends Controller
         } else {
             $foto = $kegiatan->foto;
         }
-    	$request->validate([
-            'kegiatan' => 'required',
-            'foto' => 'image|max:2048'
-        ]);
         Kegiatan::where('id', $id)->update([
             'kegiatan' => $request->kegiatan,
             'keterangan' => $request->keterangan,
             'foto' => $foto,
             'jenis' => $request->jenis
         ]);
-        return $request;
+        return true;
     }
 
     public function destroy($id)
@@ -83,5 +91,8 @@ class KegiatanController extends Controller
         return true;
     }
 
+    public function search($jenis, $s){
+        return Kegiatan::where('id','like','%'.$s.'%')->where('jenis',$jenis)->orWhere('kegiatan','like','%'.$s.'%')->where('jenis',$jenis)->get();
+    }
 
 }

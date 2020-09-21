@@ -16,23 +16,15 @@
             <div id="notif"></div>
             <input type="hidden" id="id" name="id">
             <div class="form-group row">
-                <label for="nama" class="col-sm-3 text-right control-label col-form-label">Kegiatan</label>
+                <label for="nama" class="col-sm-3 text-right control-label col-form-label">Nama</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="kegiatan" name="kegiatan">
+                    <input type="text" class="form-control" id="nama" name="nama">
                 </div>
             </div>
             <div class="form-group row">
-                <label for="tahun" class="col-sm-3 text-right control-label col-form-label">Tahun</label>
+                <label for="contact" class="col-sm-3 text-right control-label col-form-label">Contact</label>
                 <div class="col-sm-9">
-                    <select id="tahun" class="form-control" name="tahun">
-                        
-                    </select>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="prestasi" class="col-sm-3 text-right control-label col-form-label">Prestasi</label>
-                <div class="col-sm-9">
-                    <input type="text" class="form-control" id="prestasi" name="prestasi">
+                    <input type="text" class="form-control" id="contact" name="contact">
                 </div>
             </div>
           </div>
@@ -94,9 +86,8 @@
 
     let mf = new MyFetch();
     let id = document.getElementById('id');
-    let kegiatan = document.getElementById('kegiatan');
-    let tahun = document.getElementById('tahun');
-    let prestasi = document.getElementById('prestasi');
+    let nama = document.getElementById('nama');
+    let contact = document.getElementById('contact');
     let notif = document.getElementById('notif');
     let cari = document.getElementById('cari');
 
@@ -105,9 +96,8 @@
         thead.innerHTML = `
             <tr>
                 <th style="text-align: center;" scope="col">No</th>
-                <th style="text-align: center;" scope="col">Kegiatan</th>
-                <th style="text-align: center;" scope="col">Tahun</th>
-                <th style="text-align: center;" scope="col">Prestasi</th>
+                <th style="text-align: center;" scope="col">Nama</th>
+                <th style="text-align: center;" scope="col">Contact</th>
                 <th style="text-align: center;" scope="col">
                     <a data-toggle="modal" data-target="#exampleModal" id="btn-tambah" class="btn btn-primary text-white mt-2 btn-tambah">Tambah</a>
                 </th>
@@ -119,9 +109,8 @@
             tbody.innerHTML += `
                 <tr>
                     <td class="text-center">${i + 1}}</td>
-                    <td class="text-center">${data2[i].kegiatan}</td>
-                    <td class="text-center">${data2[i].tahun}</td>
-                    <td class="text-center">${data2[i].prestasi}</td>
+                    <td class="text-center">${data2[i].nama}</td>
+                    <td class="text-center">${data2[i].contact}</td>
                     <td class="text-center">
                         <a data-toggle="modal" data-id="${data2[i].id}" data-target="#exampleModal" class="d-inline btn btn-sm btn-success text-white btn-ubah">Ubah</a>
                         <a data-id="${data2[i].id}" class="btn d-inline btn-sm btn-danger btn-hapus">Hapus</a>
@@ -132,7 +121,7 @@
       }
 
     async function loadData() {
-        let data = await mf.getData('/api/prestasi/');
+        let data = await mf.getData('/api/contact/');
         isi(data);
     }
 
@@ -160,18 +149,11 @@
         if (e.target.classList.contains('btn-tambah')) {
             $('#exampleModal').modal('show');  
             let myForm = document.getElementById('myForm');
-            myForm.setAttribute('action', '/api/prestasi');
+            myForm.setAttribute('action', '/api/contact');
             id.value = "";
-            kegiatan.value = "";
+            nama.value = "";
             notif.innerHTML = "";
-            let date = new Date();
-            let th = date.getFullYear();
-            for (var i = th; i > 1999; i--) {
-                tahun.innerHTML += `
-                    <option>${i}</option>
-                `;
-            }
-            prestasi.value = "";
+            contact.value = "";
         }
     });
 
@@ -179,41 +161,26 @@
     document.addEventListener('click', async function(e) {
         if (e.target.classList.contains('btn-hapus')) {
             let result = confirm('Hapus data?');
-            let idPrestasi = e.target.dataset.id;
+            let idContact = e.target.dataset.id;
             if (result == true) {
-                let hapus = await mf.deleteData('/api/prestasi/delete/' + idPrestasi);
+                let hapus = await mf.deleteData('/api/contact/delete/' + idContact);
                 if (hapus) {
                     loadData();    
                 }
-            }else{
-                alert('Data tidak ditemukan');
             }
         }
     });
 
     document.addEventListener('click', async function(e) {
         if (e.target.classList.contains('btn-ubah')) {
-            let idPrestasi = e.target.dataset.id;
-            let dataPrestasi = await mf.getData('/api/prestasi/detail/' + idPrestasi);
-            id.value = dataPrestasi.id;
-            kegiatan.value = dataPrestasi.kegiatan;
+            let idContact = e.target.dataset.id;
+            let dataContact = await mf.getData('/api/contact/detail/' + idContact);
+            id.value = dataContact.id;
+            nama.value = dataContact.nama;
             notif.innerHTML = "";
-            let date = new Date();
-            let th = date.getFullYear();
-            for (var i = th; i > 1999; i--) {
-                if (i == dataPrestasi.tahun) {
-                    tahun.innerHTML += `
-                        <option selected>${i}</option>
-                    `;  
-                } else {
-                    tahun.innerHTML += `
-                        <option>${i}</option>
-                    `;
-                }
-            }
-            prestasi.value = dataPrestasi.prestasi;
+            contact.value = dataContact.contact;
             let myForm = document.getElementById('myForm');
-            myForm.setAttribute('action', '/api/prestasi/' + dataPrestasi.id);
+            myForm.setAttribute('action', '/api/contact/' + dataContact.id);
         }
     });
 
@@ -221,7 +188,7 @@
         if (cari.value == '') {
             loadData();
         }else{
-            let hasil = await mf.getData('/api/prestasi/search/' + cari.value);
+            let hasil = await mf.getData('/api/contact/search/' + cari.value);
             isi(hasil);
         }
     });

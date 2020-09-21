@@ -4,6 +4,10 @@ class MyFetch{
 	    return fetch(url).then(response => response.json());
 	}
 
+	getHTML(url) {
+	    return fetch(url).then(response => response.text());
+	}
+
 	deleteData(url) {
 	    return fetch(url).then(response => response.json());
 	}
@@ -26,9 +30,9 @@ class MyCode {
 		let awal = await mf.getData('/api/profil');
         let periode = document.getElementById(id);
         let th = new Date().getFullYear();
-        periode.innerHTML = `<option value="">Pilih Periode</option>`;
+        periode.innerHTML = `<option>${th}</option>`;
         try {
-            for (let i = th; i >= awal.tahun; i--) {
+            for (let i = th - 1; i >= awal.tahun; i--) {
                 periode.innerHTML += `
                     <option>${i}</option>
                 `;

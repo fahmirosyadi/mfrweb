@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Alumni;
+use App\Theme;
+use Illuminate\Support\Facades\Validator;
+
 class AlumniController extends Controller
 {
     /**
@@ -13,7 +16,7 @@ class AlumniController extends Controller
      */
     public function index()
     {
-        return view('admin.alumni');
+        return view('admin.alumni',['tema' => Theme::find(1), 'title' => 'Alumni']);
     }
 
 
@@ -32,11 +35,14 @@ class AlumniController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(),[
             'nama' => 'required',
             'tahun' => 'required',
             'foto' => 'image|max:2048'
         ]);
+        if ($validator->fails()) {
+            return $validator->errors()->all();
+        }
         if ($request->file('foto')) {
             $foto = $request->file('foto')->store('alumni');
         } else {
@@ -54,6 +60,14 @@ class AlumniController extends Controller
 
     public function update(Request $request, $id)
     {
+        $validator = Validator::make($request->all(),[
+            'nama' => 'required',
+            'tahun' => 'required',
+            'foto' => 'image|max:2048'
+        ]);
+        if ($validator->fails()) {
+            return $validator->errors()->all();
+        }
         $alumni = Alumni::find($id);
         if ($request->file('foto')) {
             \Storage::delete($alumni->foto);
@@ -61,11 +75,6 @@ class AlumniController extends Controller
         } else {
             $foto = $alumni->foto;
         }
-        $request->validate([
-            'nama' => 'required',
-            'tahun' => 'required',
-            'foto' => 'image|max:2048'
-        ]);
         Alumni::where('id', $id)->update([
             'nama' => $request->nama,
             'alamat' => $request->alamat,
@@ -82,6 +91,10 @@ class AlumniController extends Controller
         \Storage::delete($alumni->foto);
         Alumni::destroy($id);
         return true;
+    }
+
+    public function search($s){
+        return Alumni::where('nama','like','%'.$s.'%')->orWhere('alamat','like','%'.$s.'%')->orWhere('tahun','like','%'.$s.'%')->orWhere('alamat','like','%'.$s.'%')->get();
     }
 
 

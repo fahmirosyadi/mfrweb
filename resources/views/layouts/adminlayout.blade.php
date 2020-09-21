@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{url('/storage/tampilan/logo.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{url('/storage/'.$tema->logo)}}">
     <title>@yield('judul')</title>
     <script src="{{url('/orgchart.js')}}"></script>
     <script src="{{url('/admin/myJs/myJs.js')}}"></script>
@@ -35,11 +35,26 @@
             /*font-family: britannic bold;*/
         }
         .brand-text{
+            margin-left: 22px;
+        }
+        .arrow{
             font-size: 10px;
-            position: absolute; 
-            margin-left: 65px;
-            margin-top: 30px;
-            padding-top: 2px;
+            margin-left: 40px;
+            margin-top: 10px;
+            width: 170px;
+            position: absolute;
+            background-color: #ffc107;
+            clip-path: polygon(0% 0%, 80% 0%, 100% 50%, 80% 100%, 0% 100%);
+        }
+
+        @media (min-width: 992px) {
+            
+        }
+
+        @media (max-width: 767.98px) {
+            .arrow{
+                visibility: hidden;
+            }
         }
     </style>
 
@@ -58,18 +73,20 @@
                 <!-- ============================================================== -->
                 <!-- Logo -->
                 <!-- ============================================================== -->
-                <a class="navbar-brand" href="index.html">
+                <a class="navbar-brand" href="{{ url('/home') }}">
                     <!-- Logo icon -->
                     
                     <!--End Logo icon -->
                     <!-- Logo text -->
                     <span class="logo-text">
                          <!-- dark Logo text -->
-                        <img src="{{url('/storage/tampilan/brand.png')}}" style="float:left; position: relative;" height="70" alt="homepage" class="light-logo" />
-                        <div class="p-2 mt-2 brand-text" style="">
-                            <h6>PONDOK PESANTREN</h6>
-                            <h6>KH. AHMAD DAHLAN</h6>
-                            <h6>SIPIROK</h6>
+                        <img src="{{url('/storage/'.$tema->logo)}}" style="float:left; position: relative; z-index: 100;" height="70" alt="homepage" class="light-logo" />
+                        <div class="arrow">
+                            <div class="pl-2 mt-1 brand-text" id="judul" style="">
+                              <h6 style="margin-top: 2px">PONDOK PESANTREN</h6>
+                              <h6>KH. AHMAD DAHLAN</h6>
+                              <h6>SIPIROK</h6>
+                            </div>
                         </div>
                     </span>
                     <!-- Logo icon -->
@@ -130,22 +147,30 @@
                     <!-- User profile and search -->
                     <!-- ============================================================== -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{url('/admin/images/users/1.jpg')}}" alt="user" class="rounded-circle" width="31"></a>
+                        <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            @if(Auth::user()->foto != "")
+                            <img src="{{url('/storage/'.Auth::user()->foto)}}" alt="user" class="rounded-circle" width="31">
+                            @else
+                            <img src="{{url('/admin/images/users/1.jpg')}}" alt="user" class="rounded-circle" width="31">
+                            @endif
+                            
+                        </a>
                         <div class="dropdown-menu dropdown-menu-right user-dd animated">
                             <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i> <label>{{ Auth::user()->name }}</label></a>
-                            <!-- <form method="post" action="{{url('/logout')}}">    
-                                <button class="dropdown-item" type="submit"><i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</button>
-                            </form> -->
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">
+                                <i class="ti-arrow-right m-r-5 m-l-5"></i>
                                 {{ __('Logout') }}
                             </a>
+                            <a class="dropdown-item" href="{{ url('/admin/user/ubahPassword/'.auth()->user()->id) }}"><i class="ti-settings m-r-5 m-l-5"></i> <label>Ubah password</label></a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
                             </form>
                             <div class="dropdown-divider"></div>
-                            <div class="p-l-30 p-10"><a href="javascript:void(0)" class="btn btn-sm btn-success btn-rounded">View Profile</a></div>
+                            <div class="row">
+                                <div class="p-l-30 p-10 col-6"><a href="{{url('/admin/user/profile/'.auth()->user()->id)}}" class="btn btn-sm btn-success btn-rounded">View Profile</a></div>
+                            </div>
                         </div>
                     </li>
                     <!-- ============================================================== -->
@@ -165,19 +190,26 @@
                     <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('/home')}}" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span></a></li>
                     <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-receipt"></i><span class="hide-menu">Tentang </span></a>
                         <ul aria-expanded="false" class="collapse  first-level">
-                            <li class="sidebar-item"><a href="{{url('/admin/profil')}}" class="sidebar-link"><i class="mdi mdi-note-outline"></i><span class="hide-menu"> Pesantren </span></a></li>
-                            <li class="sidebar-item"><a href="{{url('/admin/pengasuh')}}" class="sidebar-link"><i class="mdi mdi-note-plus"></i><span class="hide-menu"> Pengasuh </span></a></li>
-                            <li class="sidebar-item"><a href="{{url('/admin/organisasi')}}" class="sidebar-link"><i class="mdi mdi-note-plus"></i><span class="hide-menu"> Organisasi </span></a></li>
+                            <li class="sidebar-item"><a href="{{url('/admin/profil')}}" class="sidebar-link"><i class="mdi mdi-receipt"></i><span class="hide-menu"> Pesantren </span></a></li>
+                            <li class="sidebar-item"><a href="{{url('/admin/pengasuh')}}" class="sidebar-link"><i class="mdi mdi-receipt"></i><span class="hide-menu"> Pengasuh </span></a></li>
+                            <li class="sidebar-item"><a href="{{url('/admin/organisasi')}}" class="sidebar-link"><i class="mdi mdi-receipt"></i><span class="hide-menu"> Organisasi </span></a></li>
                         </ul>
                     </li>
-                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('/admin/alumni')}}" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Alumni</span></a></li>
-                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('/admin/kegiatan')}}" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Kegiatan</span></a></li>
-                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('/admin/prestasi')}}" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Prestasi</span></a></li>
-                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('/admin/sarana')}}" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Sarana</span></a></li>
-                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('/admin/kurikulum')}}" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Kurikulum</span></a></li>
-                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('/admin/berita')}}" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Berita</span></a></li>
-                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('/admin/user')}}" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Kelola User</span></a></li>
-                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('/admin/tema')}}" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Tema</span></a></li>
+                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('/admin/alumni')}}" aria-expanded="false"><i class="mdi mdi-border-outside"></i><span class="hide-menu">Alumni</span></a></li>
+                    <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-border-outside"></i><span class="hide-menu">Fasilitas </span></a>
+                        <ul aria-expanded="false" class="collapse  first-level">
+                            <li class="sidebar-item"><a href="{{url('/admin/program')}}" class="sidebar-link"><i class="mdi mdi-receipt"></i><span class="hide-menu"> Program </span></a></li>
+                            <li class="sidebar-item"><a href="{{url('/admin/sarana')}}" class="sidebar-link"><i class="mdi mdi-receipt"></i><span class="hide-menu"> Sarana </span></a></li>
+                            <li class="sidebar-item"><a href="{{url('/admin/kurikulum')}}" class="sidebar-link"><i class="mdi mdi-receipt"></i><span class="hide-menu"> Kurikulum </span></a></li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('/admin/prestasi')}}" aria-expanded="false"><i class="mdi mdi-border-outside"></i><span class="hide-menu">Prestasi</span></a></li>
+                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('/admin/berita')}}" aria-expanded="false"><i class="mdi mdi-border-outside"></i><span class="hide-menu">Berita</span></a></li>
+                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('/admin/contact')}}" aria-expanded="false"><i class="mdi mdi-border-outside"></i><span class="hide-menu">Contact</span></a></li>
+                    @if(auth()->user()->role == "admin")
+                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('/admin/user')}}" aria-expanded="false"><i class="mdi mdi-border-outside"></i><span class="hide-menu">Kelola User</span></a></li>
+                    @endif
+                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('/admin/tema')}}" aria-expanded="false"><i class="mdi mdi-receipt"></i><span class="hide-menu">Tema</span></a></li>
                 </ul>
             </nav>
             <!-- End Sidebar navigation -->
@@ -193,12 +225,12 @@
      <div class="page-breadcrumb">
         <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
-                <h4 class="page-title">Form Basic</h4>
+                <h4 class="page-title">{{ $title }}</h4>
                 <div class="ml-auto text-right">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{url('/home')}}">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Berita</li>
+                            <li class="breadcrumb-item active" aria-current="page">{{ $title }}</li>
                         </ol>
                     </nav>
                 </div>

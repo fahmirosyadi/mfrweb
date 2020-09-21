@@ -18,16 +18,25 @@
                             <label for="judul">Judul</label>
                             <input type="text" id="judul" name="judul" class="form-control">
                         </div>
+                        @error('judul')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                         <div class="form-group">
                             <textarea type="text" id="berita" name="berita" class="form-control">
                                   
                             </textarea>
                         </div>
+                        @error('berita')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                         <div class="form-group">
                             <label for="alamat">Foto</label>
                             <img class="d-block mb-3" src="" height="100" width="100" id="foto2">
                             <input type="file" id="foto" name="foto" class="form-control">
                         </div>
+                        @error('foto')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="border-top">
                         <div class="card-body">

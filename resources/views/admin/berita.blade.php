@@ -47,6 +47,7 @@
 <script type="text/javascript">
 
     let mf = new MyFetch();
+    let cari = document.getElementById('cari');
       
     function isi(data2) {
         let thead = document.getElementById('tabel-head');
@@ -105,5 +106,15 @@
         }
     });
 
+    cari.addEventListener('keyup', async function() {
+        if (cari.value == '') {
+            loadData();
+        }else{
+            let hasil = await mf.getData('/api/berita/search/' + cari.value);
+            isi(hasil);
+        }
+    })
+
 </script>
+
 @endsection

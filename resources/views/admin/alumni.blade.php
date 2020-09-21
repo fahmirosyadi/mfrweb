@@ -14,6 +14,7 @@
             </button>
           </div>
           <div class="modal-body">
+            <div id="notif"></div>
             <input type="hidden" id="id" name="id">
             <div class="form-group row">
                 <label for="nama" class="col-sm-3 text-right control-label col-form-label">Nama</label>
@@ -124,6 +125,8 @@
     let testimoni = document.getElementById('testimoni');
     let foto2 = document.getElementById('foto2');
     let tahun = document.getElementById('tahun');
+    let notif = document.getElementById('notif');
+    let cari = document.getElementById('cari');
 
       function isi(data2) {
         let thead = document.getElementById('tabel-head');
@@ -175,13 +178,18 @@
     btnSimpan.addEventListener('click', async function() {
         let myForm = document.getElementById('myForm');
         let dataForm = new FormData(myForm);
-        let simpan = await mf.postData(myForm.action, dataForm);
-        if (simpan) {
+        let status = await mf.postData(myForm.action, dataForm);
+        if (status == true) {
             loadData();
+            $('#exampleModal').modal('hide');
         }else{
-            alert('Gagal menyimpan');
+            notif.innerHTML = "";
+            for(let i = 0; i < status.length; i++){
+                notif.innerHTML += `
+                    <div class="alert alert-danger">${status[i]}</div>
+                `;
+            }
         }
-        $('#exampleModal').modal('hide');
     })
 
     document.addEventListener('click',async function(e) {
@@ -193,6 +201,7 @@
             alamat.value = "";
             testimoni.value = "";
             foto.value = "";
+            notif.innerHTML = "";
             let date = new Date();
             let th = date.getFullYear(); 
             tahun.innerHTML = "";
@@ -229,6 +238,7 @@
             nama.value = dataAlumni.nama;
             alamat.value = dataAlumni.alamat;
             testimoni.value = dataAlumni.testimoni;
+            notif.innerHTML = "";
             foto.value = "";
             if (dataAlumni.foto != null) {
                 foto2.src = '/storage/' + dataAlumni.foto;
@@ -253,6 +263,15 @@
             }
             let myForm = document.getElementById('myForm');
             myForm.setAttribute('action', '/api/alumni/' + dataAlumni.id);
+        }
+    });
+
+    cari.addEventListener('keyup', async function() {
+        if (cari.value == '') {
+            loadData();
+        }else{
+            let hasil = await mf.getData('/api/alumni/search/' + cari.value);
+            isi(hasil);
         }
     });
 

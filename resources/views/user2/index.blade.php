@@ -1,18 +1,24 @@
 @extends('layouts/userlayout')
 
     @section('container')
-    <section class="home_banner_area" style="background-image: url({{url('/storage/'.$tema->bg2)}})">
+    <section class="home_banner_area" style="background-image: url({{url('/storage/'.$tema->bg1)}})">
+      <div style="background-color: rgba(0,0,0,0.5); position: absolute;right: 0;left: 0;top: 0; bottom: 0;"></div>
       <div class="banner_inner" style="height: 100px;">
         <div class="container" style="height: 100px;">
           <div class="row" style="height: 100px;">
             <div class="col-lg-12" style="height: 100px;">
-              <div class="banner_content text-center">
-                <p class="text-uppercase text-white">
-                  <!-- Selamat Datang di -->
+              <div id="container-judul" class="banner_content text-center">
+                <p style="font-size: 1em" class="text-uppercase text-white">
+                  Selamat Datang di
                 </p>
-                <h2 class="text-uppercase mt-4 mb-5 text-white">
-                  <!-- {{$tema->judul}} -->
+                <h2 class="text-uppercase text-white" style="font-size: 3em;">
+                  {{$tema->judul}}
                 </h2>
+                @if($tema->judul2 != null)
+                <h2 class="text-uppercase text-white" style="font-size: 3em;">
+                  {{$tema->judul2}}
+                </h2>
+                @endif
               </div>
             </div>
           </div>
@@ -128,9 +134,9 @@
           <div class="col-lg-5">
             <div class="main_title">
               <h2 class="mb-3">Sarana Prasarana</h2>
-              <p>
+              <!-- <p>
                 Replenish man have thing gathering lights yielding shall you
-              </p>
+              </p> -->
             </div>
           </div>
         </div>
@@ -169,9 +175,9 @@
           <div class="col-lg-5">
             <div class="main_title">
               <h2 class="mb-3 text-white">Berita Terbaru</h2>
-              <p>
+              <!-- <p>
                 Replenish man have thing gathering lights yielding shall you
-              </p>
+              </p> -->
             </div>
           </div>
         </div>
@@ -223,9 +229,9 @@
           <div class="col-lg-5">
             <div class="main_title">
               <h2 class="mb-3">Testimoni Alumni</h2>
-              <p>
+              <!-- <p>
                 Replenish man have thing gathering lights yielding shall you
-              </p>
+              </p> -->
             </div>
           </div>
         </div>

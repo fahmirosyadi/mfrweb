@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Sarana;
+use App\Theme;
+use Illuminate\Support\Facades\Validator;
 
 class SaranaController extends Controller
 {
 
     public function index()
     {
-        return view('admin.sarana');
+        return view('admin.sarana',['tema' => Theme::find(1), 'title' => 'Sarana']);
     }
 
 
@@ -28,10 +30,14 @@ class SaranaController extends Controller
 
     public function store(Request $request)
     {
-    	$request->validate([
+        $validator = Validator::make($request->all(),[
             'sarana' => 'required',
             'foto' => 'image|max:2048'
         ]);
+        if ($validator->fails()) {
+            return $validator->errors()->all();
+        }
+
         if ($request->file('foto')) {
             $foto = $request->file('foto')->store('sarana');
         } else {
@@ -47,6 +53,14 @@ class SaranaController extends Controller
 
     public function update(Request $request, $id)
     {
+        $validator = Validator::make($request->all(),[
+            'sarana' => 'required',
+            'foto' => 'image|max:2048'
+        ]);
+        if ($validator->fails()) {
+            return $validator->errors()->all();
+        }
+
     	$sarana = Sarana::find($id);
         if ($request->file('foto')) {
             \Storage::delete($sarana->foto);
@@ -54,10 +68,6 @@ class SaranaController extends Controller
         } else {
             $foto = $sarana->foto;
         }
-        $request->validate([
-            'sarana' => 'required',
-            'foto' => 'image|max:2048'
-        ]);
         Sarana::where('id', $id)->update([
             'sarana' => $request->sarana,
             'keterangan' => $request->keterangan,
@@ -74,5 +84,8 @@ class SaranaController extends Controller
         return true;
     }
 
+    public function search($s){
+        return Sarana::where('sarana','like','%'.$s.'%')->get();
+    }
 
 }

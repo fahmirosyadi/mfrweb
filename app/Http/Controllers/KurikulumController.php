@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Kurikulum;
+use App\Theme;
+use Illuminate\Support\Facades\Validator;
 
 class KurikulumController extends Controller
 {
     public function index()
     {
-        return view('admin.kurikulum');
+        return view('admin.kurikulum',['tema' => Theme::find(1), 'title' => 'Kurikulum']);
     }
 
 
@@ -34,20 +36,29 @@ class KurikulumController extends Controller
 
     public function store(Request $request)
     {
-    	$request->validate([
+        $validator =  Validator::make($request->all(),[
             'mapel' => 'required',
-    		'jenis' => 'required'
-    	]);
+            'jenis' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return $validator->errors()->all();
+        }
+
         Kurikulum::create($request->all());
         return true;
     }
 
     public function update(Request $request, $id)
     {
-    	$request->validate([
+    	$validator =  Validator::make($request->all(),[
             'mapel' => 'required',
-            'jenis' => 'required'
+            'jenis' => 'required',
         ]);
+
+        if($validator->fails()) {
+            return $validator->errors()->all();
+        }
         Kurikulum::where('id', $id)->update([
             'mapel' => $request->mapel,
             'jenis' => $request->jenis
@@ -59,5 +70,9 @@ class KurikulumController extends Controller
     {
         Kurikulum::destroy($id);
         return true;
+    }
+
+    public function search($jenis,$s){
+        return Kurikulum::where('mapel','like','%'.$s.'%')->where('jenis',$jenis)->get();
     }
 }
