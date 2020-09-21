@@ -48,11 +48,22 @@
         #container-judul h2{
            margin-top: 0.5em;
         }
+        #gambarPengasuh{
+          width: 250px;
+          height: 300px;
+        }
+        #containerSambutan{
+          padding-left: 200px;
+          padding-right: 200px;
+        }
       }
 
       @media (max-width: 575.98px) {
         #container-judul{
           font-size: 7px;
+        }
+        #gambarPengasuh{
+          width: 100%;
         }
       }
 

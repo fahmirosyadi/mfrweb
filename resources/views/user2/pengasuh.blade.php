@@ -8,11 +8,11 @@
 	    </div>
 	    <div class="content_wrapper">
 	        <div class="event_details_area pb-3 pt-3 mb-30">
-	            <div class="section-top-border" style="padding-left: 200px;padding-right:200px;">
-					<h3 class="mb-30 title_color">Sambutan Pengasuh</h3>
-						<img style="width: 250px;height: 300px" src="{{url('/storage/'.$pengasuh->foto)}}" alt="" class="float-left mr-3 mb-3 img-fluid">
-						<?= $pengasuh->sambutan ?>
-					</div>
+	            <div class="section-top-border" id="containerSambutan">
+					<h3 class="mb-30 title_color">Sambutan Pengasuh {{ $profil->nama }} {{ $pengasuh->nama }}</h3>
+					<h3></h3>
+					<img id="gambarPengasuh" src="{{url('/storage/'.$pengasuh->foto)}}" alt="" class="float-left mb-3 mr-3 img-fluid">
+					<?= $pengasuh->sambutan ?>
 				</div>
 	        </div>
 	    </div>
