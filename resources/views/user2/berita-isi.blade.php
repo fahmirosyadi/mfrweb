@@ -12,7 +12,7 @@
         <div class="blog_post">
             <img src="{{url('/storage/'.$row->foto)}}" alt="">
             <div class="blog_details">
-                <a href="single-blog.html">
+                <a href="{{ url('/berita/'.$row->id) }}">
                     <h2>{{ $row->judul }}</h2>
                 </a>
                 <?= substr($row->berita, 0, 250)."..." ?>

@@ -47,7 +47,7 @@
                 <div class="media post_item">
                     <img style="height: 100px;" src="{{url('/storage/'.$row->foto)}}" alt="post">
                     <div class="media-body">
-                        <a href="blog-details.html">
+                        <a href="{{ url('/berita/'.$row->id) }}">
                             <h3>{{ $row->judul }}</h3>
                         </a>
                         <p>{{ $row->created_at->isoFormat('DD-MM-YYYY') }}</p>
@@ -66,7 +66,7 @@
                 <div class="media post_item">
                     <img style="height: 100px;" src="{{url('/storage/'.$row->foto)}}" alt="post">
                     <div class="media-body">
-                        <a href="blog-details.html">
+                        <a href="{{ url('/berita/'.$row->id) }}">
                             <h3>{{ $row->judul }}</h3>
                         </a>
                         <p>{{ $row->created_at->isoFormat('DD-MM-YYYY') }}</p>

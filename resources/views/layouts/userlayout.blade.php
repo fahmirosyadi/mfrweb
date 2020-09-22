@@ -179,6 +179,7 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{{url('/contact')}}">Contact</a>
                 </li>
+                <a href="{{ url('/login') }}" class="btn btn-warning mt-4 mb-4">Login</a>
               </ul>
             </div>
           </div>
