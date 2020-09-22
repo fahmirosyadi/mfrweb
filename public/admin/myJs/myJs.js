@@ -1,25 +1,52 @@
 class MyFetch{
 
-	getData(url) {
-	    return fetch(url).then(response => response.json());
+	getData(url, loading = "") {
+		if (loading != "") {
+			document.getElementById(loading).style.visibility = "visible";
+		    return fetch(url).then(response => response.json()).finally(function(){
+		    	document.getElementById(loading).style.visibility = "hidden";
+		    });
+		}else{
+			return fetch(url).then(response => response.json());
+		}
 	}
 
-	getHTML(url) {
-	    return fetch(url).then(response => response.text());
+	getHTML(url,loading = "") {
+		if (loading != "") {
+			document.getElementById(loading).style.visibility = "visible";
+			return fetch(url).then(response => response.text()).finally(function(){
+				document.getElementById(loading).style.visibility = "hidden";
+			});
+		}else{
+	    	return fetch(url).then(response => response.text());
+		}
 	}
 
 	deleteData(url) {
 	    return fetch(url).then(response => response.json());
 	}
 
-	postData(url,data) {
-	    return fetch(url,{
-	        method: 'post',
-	        headers: {
-	            'X-CSRF-Token': data.get('_token')
-	        },
-	        body: data
-	    }).then(response => response.json());
+	postData(url,data,loading = "") {
+		if (loading != "") {
+			document.getElementById(loading).style.visibility = "visible";
+			return fetch(url,{
+		        method: 'post',
+		        headers: {
+		            'X-CSRF-Token': data.get('_token')
+		        },
+		        body: data
+		    }).then(response => response.json()).finally(function(){
+		    	document.getElementById(loading).style.visibility = "hidden";
+		    });	
+		}else{
+		    return fetch(url,{
+		        method: 'post',
+		        headers: {
+		            'X-CSRF-Token': data.get('_token')
+		        },
+		        body: data
+		    }).then(response => response.json());
+		}
 	}
 
 }

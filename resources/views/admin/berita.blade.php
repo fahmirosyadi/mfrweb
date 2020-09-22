@@ -17,6 +17,7 @@
                         Search:<br>
                         <input type="search" id="cari" class="form-control form-control-sm">
                     </label>
+                    <img id="loading2" style="visibility: hidden;" height="40" src="{{ url('/images/loading.gif') }}">
                 </div>
                 <table class="table table-striped table-bordered">
                     <thead id="tabel-head">
@@ -110,7 +111,7 @@
         if (cari.value == '') {
             loadData();
         }else{
-            let hasil = await mf.getData('/api/berita/search/' + cari.value);
+            let hasil = await mf.getData('/api/berita/search/' + cari.value,'loading2');
             isi(hasil);
         }
     })

@@ -69,7 +69,7 @@ Route::prefix('api/prestasi')->middleware('verified')->group(function() {
 	Route::post('', 'PrestasiController@store');
 	Route::get('delete/{id}', 'PrestasiController@destroy');
 	Route::post('{id}', 'PrestasiController@update');	
-	Route::get('search/{s}', 'PrestasiController@search');
+	Route::get('search/{s}', 'PrestasiController@search')->withoutMiddleware('verified');
 });
 
 Route::get('/admin/contact', 'ContactController@index')->middleware('verified');
@@ -79,7 +79,7 @@ Route::prefix('api/contact')->middleware('verified')->group(function() {
 	Route::post('', 'ContactController@store');
 	Route::get('delete/{id}', 'ContactController@destroy');
 	Route::post('{id}', 'ContactController@update');	
-	Route::get('search/{s}', 'ContactController@search');
+	Route::get('search/{s}', 'ContactController@search')->withoutMiddleware('verified');
 });
 
 Route::get('/admin/sarana', 'SaranaController@index')->middleware('verified');
@@ -89,7 +89,7 @@ Route::prefix('api/sarana')->middleware('verified')->group(function() {
 	Route::post('', 'SaranaController@store');
 	Route::get('delete/{id}', 'SaranaController@destroy');
 	Route::post('{id}', 'SaranaController@update');	
-	Route::get('search/{s}', 'SaranaController@search');
+	Route::get('search/{s}', 'SaranaController@search')->withoutMiddleware('verified');
 });
 
 Route::get('/admin/kurikulum', 'KurikulumController@index')->middleware('verified');
@@ -99,7 +99,7 @@ Route::prefix('api/kurikulum')->middleware('verified')->group(function() {
 	Route::post('', 'KurikulumController@store');
 	Route::get('delete/{id}', 'KurikulumController@destroy');
 	Route::post('{id}', 'KurikulumController@update');
-	Route::get('search/{jenis}/{s}', 'KurikulumController@search');	
+	Route::get('search/{jenis}/{s}', 'KurikulumController@search')->withoutMiddleware('verified');
 });
 
 Route::get('/admin/alumni', 'AlumniController@index')->middleware('verified');
@@ -109,7 +109,7 @@ Route::prefix('api/alumni')->middleware('verified')->group(function() {
 	Route::post('', 'AlumniController@store');
 	Route::get('delete/{id}', 'AlumniController@destroy');
 	Route::post('{id}', 'AlumniController@update');	
-	Route::get('search/{s}', 'AlumniController@search');
+	Route::get('search/{s}', 'AlumniController@search')->withoutMiddleware('verified');
 });
 
 Route::get('/admin/berita', 'BeritaController@index')->middleware('verified');
@@ -139,7 +139,7 @@ Route::prefix('api/user')->middleware('admin')->group(function() {
 	Route::post('{id}', 'UserController@update');
 	Route::get('/toAdmin/{id}', 'UserController@toAdmin');
 	Route::post('/updatePassword/{id}', 'UserController@updatePassword');
-	Route::get('search/{s}', 'UserController@search');	
+	Route::get('search/{s}', 'UserController@search')->withoutMiddleware('verified');
 });
 
 

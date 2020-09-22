@@ -43,7 +43,7 @@
     if (cari.value == '') {
       loadData();
     }else{
-      let hasil = await mf.getData('/api/kegiatan/search/wajib/' + cari.value);
+      let hasil = await mf.getData('/api/kegiatan/search/wajib/' + cari.value,'loading');
       isi(hasil);
     }
   });

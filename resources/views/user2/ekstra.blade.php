@@ -45,7 +45,7 @@
     if (cari.value == '') {
       loadData();
     }else{
-      let hasil = await mf.getData('/api/kegiatan/search/ekstra/' + cari.value);
+      let hasil = await mf.getData('/api/kegiatan/search/ekstra/' + cari.value,'loading');
       isi(hasil);
     }
   });

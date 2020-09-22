@@ -56,16 +56,11 @@
 
 	loadData();
 
-	let pilihPeriode = document.getElementById('select-periode');
-	pilihPeriode.addEventListener('change', function() {
-	    loadData();
-	})
-
 	cari.addEventListener('keyup',async function(){
         if (cari.value == '') {
             loadData();
         }else{
-            let hasil = await mf.getData('/api/prestasi/search/' + cari.value);
+            let hasil = await mf.getData('/api/prestasi/search/' + cari.value,'loading');
             isi(hasil);
         }
     });

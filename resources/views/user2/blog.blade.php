@@ -39,7 +39,7 @@
                         <button class="btn btn-default" type="button"><i class="ti-search"></i></button>
                     </span>
                 </div><!-- /input-group -->
-                <div class="br"></div>
+                <img id="loading" style="visibility: hidden;" height="40" src="{{ url('/images/loading.gif') }}">
             </aside>
             <aside class="single_sidebar_widget popular_post_widget">
                 <h3 class="widget_title">Berita Populer</h3>
@@ -98,7 +98,7 @@
     if (cari.value == '') {
       loadData();
     }else{
-      let hasil = await mf.getHTML('/api/berita/searchHTML/' + cari.value);
+      let hasil = await mf.getHTML('/api/berita/searchHTML/' + cari.value,'loading');
       isi(hasil);
     }
   });

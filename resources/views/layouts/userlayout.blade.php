@@ -22,6 +22,13 @@
     <style type="text/css">
     </style>
     <style type="text/css">
+
+      [node-id] rect {
+            fill: #f6d202;
+      }
+      #tree>svg {
+            background-color: #2E2E2E;
+      }
       .brand-text h6{
         margin-bottom: 3px;
         font-size: 12px;

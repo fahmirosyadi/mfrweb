@@ -40,7 +40,7 @@
     if (cari.value == '') {
       loadData();
     }else{
-      let hasil = await mf.getData('/api/sarana/search/' + cari.value);
+      let hasil = await mf.getData('/api/sarana/search/' + cari.value,"loading");
       isi(hasil);
     }
   });

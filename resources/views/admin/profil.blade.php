@@ -40,7 +40,7 @@
                 <div class="border-top">
                     <div class="card-body">
                         <button type="button" id="btn-simpan" class="btn btn-success">Simpan</button>
-                        <button type="button" id="btn-reset" class="btn btn-primary">Reset</button>
+                        <img id="loading" style="visibility: hidden;" height="40" src="{{ url('/images/loading.gif') }}">
                     </div>
                 </div>
             </form>
@@ -131,7 +131,7 @@
         let mForm = document.getElementById('myForm');
         let dataForm = new FormData(myForm);
         console.log(dataForm);
-        let status = await mf.postData(myForm.action, dataForm);
+        let status = await mf.postData(myForm.action, dataForm,'loading');
         if (status == true) {
             notif.innerHTML = `
                 <div class="alert alert-success">Berhasil disimpan</div>
@@ -160,7 +160,7 @@
     }
 
     async function loadData() {
-        let data = await mf.getData('/api/profil');
+        let data = await mf.getData('/api/profil','loading');
         isi(data);
     }
     loadData();

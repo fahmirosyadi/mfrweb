@@ -12,11 +12,11 @@
                   Selamat Datang di
                 </p>
                 <h2 class="text-uppercase text-white" style="font-size: 3em;">
-                  {{$tema->judul}}
+                  <?php echo strtoupper($tema->judul) ?>
                 </h2>
                 @if($tema->judul2 != null)
                 <h2 class="text-uppercase text-white" style="font-size: 3em;">
-                  {{$tema->judul2}}
+                  <?php echo strtoupper($tema->judul2) ?>
                 </h2>
                 @endif
               </div>

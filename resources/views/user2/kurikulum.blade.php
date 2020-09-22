@@ -69,7 +69,7 @@
 	      loadData();
 	    }else{
 			let pilihJenis = document.getElementById('select-jenis').value;
-	        let hasil = await mf.getData('/api/kurikulum/search/' + pilihJenis + '/' + cari.value);
+	        let hasil = await mf.getData('/api/kurikulum/search/' + pilihJenis + '/' + cari.value,'loading');
 	      	isi(hasil);
 	    }
 	 });

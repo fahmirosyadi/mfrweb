@@ -54,6 +54,7 @@
             </div>
           </div>
           <div class="modal-footer">
+            <img id="loading" style="visibility: hidden;" height="40" src="{{ url('/images/loading.gif') }}">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>
             <button type="button" id="btn-simpan" class="btn btn-primary">Simpan</button>
           </div>
@@ -80,6 +81,7 @@
                         Search:<br>
                         <input type="search" id="cari" class="form-control form-control-sm">
                     </label>
+                    <img id="loading2" style="visibility: hidden;" height="40" src="{{ url('/images/loading.gif') }}">
                 </div>
                 <table class="table table-striped table-bordered">
                     <thead id="tabel-head">
@@ -191,7 +193,7 @@
     btnSimpan.addEventListener('click', async function() {
         let myForm = document.getElementById('myForm');
         let dataForm = new FormData(myForm);
-        let status = await mf.postData(myForm.action, dataForm);
+        let status = await mf.postData(myForm.action, dataForm,'loading');
         if (status == true) {
             loadData();
             $('#exampleModal').modal('hide');
@@ -276,7 +278,7 @@
         if (cari.value == '') {
             loadData();
         }else{
-            let hasil = await mf.getData('/api/user/search/' + cari.value);
+            let hasil = await mf.getData('/api/user/search/' + cari.value,'loading2');
             isi(hasil);
         }
     });

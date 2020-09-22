@@ -41,7 +41,7 @@
                     <div class="border-top">
                         <div class="card-body">
                             <button type="submit" id="btn-simpan" class="btn btn-success">Simpan</button>
-                            <button type="button" id="btn-reset" class="btn btn-primary">Reset</button>
+                            <!-- <button type="button" id="btn-reset" class="btn btn-primary">Reset</button> -->
                         </div>
                     </div>
                 </form>

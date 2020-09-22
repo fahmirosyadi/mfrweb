@@ -42,6 +42,7 @@
                 <div class="border-top">
                     <div class="card-body">
                         <button type="button" id="btn-simpan" class="btn btn-success">Terapkan</button>
+                        <img id="loading" style="visibility: hidden;" height="40" src="{{ url('/images/loading.gif') }}">
                     </div>
                 </div>
             </form>
@@ -137,7 +138,7 @@
         let mForm = document.getElementById('myForm');
         let dataForm = new FormData(myForm);
         console.log(dataForm);
-        let update = await mf.postData(mForm.action, dataForm);
+        let update = await mf.postData(mForm.action, dataForm,'loading');
         if (update == true) {
             notif.innerHTML = `
                 <div class="alert alert-success" role="alert">Berhasil diterapkan</div>
