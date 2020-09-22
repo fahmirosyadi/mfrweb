@@ -130,7 +130,7 @@ Route::prefix('api/berita')->middleware(['auth','verified'])->group(function() {
 	Route::get('limitHTML/{page}', 'BeritaController@limitHTML')->withoutMiddleware(['auth','verified']);
 });
 
-Route::get('/admin/user', 'UserController@index')->middleware('admin');
+Route::get('/admin/user', 'UserController@index')->middleware(['auth','verified','admin']);
 Route::get('/admin/user/profile/{id}', 'UserController@profile')->middleware(['auth','verified']);
 Route::get('/admin/user/ubahPassword/{id}', 'UserController@ubahPassword')->middleware(['auth','verified']);
 Route::prefix('api/user')->middleware('admin')->group(function() {
