@@ -4,7 +4,7 @@ class MyFetch{
 		if (loading != "") {
 			document.getElementById(loading).style.visibility = "visible";
 		    return fetch(url).then(response => response.json()).finally(function(){
-		    	document.getElementById(loading).style.visibility = "hidden";
+		    	// document.getElementById(loading).style.visibility = "hidden";
 		    });
 		}else{
 			return fetch(url).then(response => response.json());
@@ -15,7 +15,7 @@ class MyFetch{
 		if (loading != "") {
 			document.getElementById(loading).style.visibility = "visible";
 			return fetch(url).then(response => response.text()).finally(function(){
-				document.getElementById(loading).style.visibility = "hidden";
+				// document.getElementById(loading).style.visibility = "hidden";
 			});
 		}else{
 	    	return fetch(url).then(response => response.text());
@@ -36,7 +36,7 @@ class MyFetch{
 		        },
 		        body: data
 		    }).then(response => response.json()).finally(function(){
-		    	document.getElementById(loading).style.visibility = "hidden";
+		    	// document.getElementById(loading).style.visibility = "hidden";
 		    });	
 		}else{
 		    return fetch(url,{
