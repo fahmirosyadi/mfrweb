@@ -108,14 +108,16 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-12 col-md-6 col-sm-12 single-trainer">
-            <div class="thumb d-flex justify-content-sm-center mb-3">
-              <img class="img-fluid" style="height: 200px" src="{{url('/storage/'.$pengasuh->foto)}}" alt="" />
-            </div>
             <div class="meta-text text-sm-center" style="background-color: rgba(0,0,0,0);">
-              <h4 class="text-white">{{ $pengasuh->nama }}</h4>
-              <p class="designation">Pengasuh Pondok Pesantren</p>
+              <div class="thumb d-flex justify-content-center mb-3">
+                <img class="img-fluid" style="height: 200px" src="{{url('/storage/'.$pengasuh->foto)}}" alt="" />
+              </div>
+              <center>
+                <h4 class="text-white">{{ $pengasuh->nama }}</h4>
+                <p class="designation">Pengasuh Pondok Pesantren</p>
+              </center>
               <div class="mb-4">
-                <p><?= $pengasuh->sambutan ?></p>
+                <p><?= substr($pengasuh->sambutan, 0, 500) ?></p>
               </div>
             </div>
             <center>
