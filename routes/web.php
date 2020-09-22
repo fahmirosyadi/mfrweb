@@ -32,7 +32,9 @@ Route::get('/daftar', 'PagesController@daftar');
 Route::get('/sarana', 'PagesController@sarana');
 Route::get('/sarana/{id}', 'PagesController@detailSarana');
 Route::get('/kurikulum', 'PagesController@kurikulum');
-
+Route::get('/sejarah','PagesController@sejarah');
+Route::get('/pengasuh', 'PagesController@pengasuh');
+Route::get('/about', 'PagesController@about');
 
 Route::get('/admin/periode', 'PeriodeController@index')->middleware(['auth','verified']);
 Route::prefix('api/periode')->middleware(['auth','verified'])->group(function() {
@@ -151,12 +153,9 @@ Route::get('/admin/pengasuh', 'PengasuhController@index')->middleware(['auth','v
 Route::post('/api/pengasuh', 'PengasuhController@update')->middleware(['auth','verified']);
 Route::get('/api/pengasuh', 'PengasuhController@get');
 
-Route::get('/sejarah','PagesController@sejarah');
-Route::get('/pengasuh', 'PagesController@pengasuh');
-Route::get('/about', 'PagesController@about');
 
-Route::get('/admin/tema', 'TemaController@index');
-Route::post('/api/tema', 'TemaController@update');
+Route::get('/admin/tema', 'TemaController@index')->middleware(['auth','verified']);
+Route::post('/api/tema', 'TemaController@update')->middleware(['auth','verified']);
 Route::get('/api/tema', 'TemaController@get');
 Route::get('/slink', function() {
     $target = storage_path("app/public");
