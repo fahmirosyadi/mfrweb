@@ -163,7 +163,6 @@
         this.nameInput.value = node.name;
         this.titleInput.value = node.title;
         let pp = document.getElementById('select-periode');
-        alert(pp.value);
         document.getElementById('periode').value = pp.value;
         document.getElementById('photo1').value = "";
         if (node.pid == null) {
