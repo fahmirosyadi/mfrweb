@@ -109,7 +109,7 @@
             <!-- ============================================================== -->
             <!-- End Logo -->
             <!-- ============================================================== -->
-            <div class="navbar-collapse collapse" style="background-color: #232637;" data-navbarbg="skin5">
+            <div class="navbar-collapse collapse" id="navbarSupportedContent" style="background-color: #232637;" data-navbarbg="skin5">
                 <!-- ============================================================== -->
                 <!-- toggle and nav items -->
                 <!-- ============================================================== -->
@@ -285,6 +285,7 @@
 <script src="{{url('/admin/assets/libs/flot/jquery.flot.crosshair.js')}}"></script>
 <script src="{{url('/admin/assets/libs/flot.tooltip/js/jquery.flot.tooltip.min.js')}}"></script>
 <script src="{{url('/admin/dist/js/pages/chart/chart-page-init.js')}}"></script>
+
 
 
 <!-- <script src="{{url('/admin/extra-libs/multicheck/datatable-checkbox-init.js')}}"></script>
