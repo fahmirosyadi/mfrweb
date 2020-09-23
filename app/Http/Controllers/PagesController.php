@@ -11,6 +11,7 @@ use App\Sarana;
 use App\Pengasuh;
 use App\Berita;
 use App\Contact;
+use App\Gallery;
 use Mail;
 
 class PagesController extends Controller
@@ -38,6 +39,13 @@ class PagesController extends Controller
     public function alumni() {
     	$tema = Theme::find(1);
     	return view('user.alumni',['tema' => $tema, 'data' => Theme::find(1),'contact' => Contact::all(),'profil' => Profil::find(1)]);
+    }
+
+    public function detailAlumni($id) {
+        $title = "Detail Alumni";
+        $tema = Theme::find(1);
+        $alumni = Alumni::find($id);
+        return view('user2.alumni-detail',['title' => $title, 'tema' => $tema,'alumni' => $alumni,'contact' => Contact::all(),'profil' => Profil::find(1)]);
     }
 
     public function program() {
@@ -78,6 +86,13 @@ class PagesController extends Controller
     	$popular = Berita::orderByDesc('views')->limit(4)->get();
     	$new = Berita::orderByDesc('created_at')->limit(4)->get();
     	return view('user2.prestasi',['title' => $title, 'tema' => $tema,'popular' => $popular, 'new' => $new,'contact' => Contact::all(),'profil' => Profil::find(1)]);
+    }
+
+    public function galleryPrestasi($id) {
+        $title = "Gallery Prestasi";
+        $popular = Berita::orderByDesc('views')->limit(4)->get();
+        $new = Berita::orderByDesc('created_at')->limit(4)->get();
+        return view('user2.prestasi-gallery',['title' => $title,'tema' => Theme::find(1),'popular' => $popular, 'new' => $new,'listFoto' => Gallery::where('prestasi_id',$id)->get(),'profil' => Profil::find(1),'contact' => Contact::all(),'prestasiId' => $id]);
     }
 
     public function sejarah() {

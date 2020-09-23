@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Prestasi;
 use App\Theme;
+use App\Gallery;
 use Illuminate\Support\Facades\Validator;
 
 class PrestasiController extends Controller
@@ -28,6 +29,7 @@ class PrestasiController extends Controller
         $hasil = Prestasi::find($id);
         return json_encode($hasil);
     }
+
 
     public function store(Request $request)
     {

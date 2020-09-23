@@ -196,7 +196,7 @@
     <footer class="footer-area section_gap">
       <div class="container">
         <div class="row">
-          <div class="col-lg-3 col-md-6 single-footer-widget">
+          <div class="col-lg-2 col-md-6 single-footer-widget">
             <h4>Tentang</h4>
             <ul>
               <li><a href="{{ url('/sejarah') }}">Sejarah</a></li>
@@ -204,14 +204,23 @@
               <li><a href="{{ url('/organisasi') }}">Organisasi</a></li>
             </ul>
           </div>
-          <div class="col-lg-3 col-md-6 single-footer-widget">
+          <div class="col-lg-2 col-md-6 single-footer-widget">
             <h4>Link</h4>
             <ul>
               <li><a href="https://web.facebook.com/Pondok-Pesantren-Muhammadiyah-KH-Ahmad-Dahlan-Sipirok-157350531103288/">Facebook</a></li>
               <li><a href="http://pubpasim.org">PUB Pasim</a></li>
             </ul>
           </div>
-          <div class="col-lg-3 col-md-6 single-footer-widget">
+          <div class="col-lg-2 col-md-6 single-footer-widget">
+            <h4>Fasilitas</h4>
+            <ul>
+              <li><a href="{{ url('/sarana') }}">Sarana Prasarana</a></li>
+              <li><a href="{{ url('/program') }}">Program</a></li>
+              <li><a href="{{ url('/ekstra') }}">Ekstrakurikuler</a></li>
+              <li><a href="{{ url('/kurikulum') }}">Kurikulum</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-2 col-md-6 single-footer-widget">
             <h4>Contact</h4>
             <ul>
               @foreach($contact as $row)
@@ -222,10 +231,13 @@
               @endforeach
             </ul>
           </div>
-          <div class="col-lg-3 col-md-6 single-footer-widget">
+          <div class="col-lg-4 col-md-6 single-footer-widget">
             <h4>Website Creator</h4>
             <ul>
-              <li><a href="#">PUB Team</a></li>
+              <li><a href="#">Abdul Hafiz Tanjung (Pembina PUB)</a></li>
+              <li><a href="#">M. Fahmi Rosyadi (PUB Angkatan 17)</a></li>
+              <li><a href="#">Elisa Septiani Lubis (PUB Angkatan 17)</a></li>
+              <li><a href="#">Winna Dwi Waluyo (PUB Angkatan 17)</a></li>
             </ul>
           </div>
         </div>

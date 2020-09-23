@@ -3,7 +3,7 @@
 @section('container2')
 <div class="row">
   <div class="col-lg-8 posts-list">
-      <div class="single-post row">
+      <div class="single-post row" id="single-post">
           @yield('content')
       </div>
   </div>

@@ -2,7 +2,7 @@
 
 <!-- Modal -->
 @section('modal')
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <form id="myForm" enctype="multipart/form-data" method="post" action="/api/alumni">
@@ -20,6 +20,12 @@
                 <label for="nama" class="col-sm-3 text-right control-label col-form-label">Nama</label>
                 <div class="col-sm-9">
                     <input type="text" autocomplete="false" class="form-control" id="nama" name="nama">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="job" class="col-sm-3 text-right control-label col-form-label">Karir</label>
+                <div class="col-sm-9">
+                    <input type="text" autocomplete="false" class="form-control" id="job" name="job">
                 </div>
             </div>
             <div class="form-group row">
@@ -63,7 +69,7 @@
       </form>
     </div>
   </div>
-</div>
+</div> -->
 @endsection
 
 @section('container')
@@ -127,6 +133,7 @@
     let testimoni = document.getElementById('testimoni');
     let foto2 = document.getElementById('foto2');
     let tahun = document.getElementById('tahun');
+    let job = document.getElementById('job');
     let notif = document.getElementById('notif');
     let cari = document.getElementById('cari');
 
@@ -136,11 +143,10 @@
             <tr>
                 <th style="text-align: center;" scope="col">No</th>
                 <th style="text-align: center;" scope="col">Nama</th>
-                <th style="text-align: center;" scope="col">Alamat</th>
                 <th style="text-align: center;" scope="col">Tahun</th>
                 <th style="text-align: center;" scope="col">Foto</th>
                 <th style="text-align: center;" scope="col">
-                    <a data-toggle="modal" data-target="#exampleModal" id="btn-tambah" class="btn btn-primary text-white mt-2 btn-tambah">Tambah</a>
+                    <a href="/admin/alumni/create" class="btn btn-primary text-white mt-2 btn-tambah">Tambah</a>
                 </th>
             </tr>
         `;
@@ -155,13 +161,12 @@
                 <tr>
                     <td class="text-center">${i + 1}}</td>
                     <td>${data2[i].nama}</td>
-                    <td>${data2[i].alamat}</td>
                     <td>${data2[i].tahun}</td>
                     <td class="text-center">
                         <img height="100" width="100" src="${foto}">
                     </td>
                     <td class="text-center">
-                        <a data-toggle="modal" data-id="${data2[i].id}" data-target="#exampleModal" class="d-inline btn btn-sm btn-success text-white btn-ubah">Ubah</a>
+                        <a href="/admin/alumni/edit/${data2[i].id}" data-id="${data2[i].id}" class="d-inline btn btn-sm btn-success text-white">Ubah</a>
                         <a data-id="${data2[i].id}" class="btn d-inline btn-sm btn-danger btn-hapus">Hapus</a>
                     </td>
                 </tr>
@@ -176,45 +181,46 @@
 
       loadData();
 
-    let btnSimpan = document.getElementById('btn-simpan');
-    btnSimpan.addEventListener('click', async function() {
-        let myForm = document.getElementById('myForm');
-        let dataForm = new FormData(myForm);
-        let status = await mf.postData(myForm.action, dataForm,'loading');
-        if (status == true) {
-            loadData();
-            $('#exampleModal').modal('hide');
-        }else{
-            notif.innerHTML = "";
-            for(let i = 0; i < status.length; i++){
-                notif.innerHTML += `
-                    <div class="alert alert-danger">${status[i]}</div>
-                `;
-            }
-        }
-    })
+    // let btnSimpan = document.getElementById('btn-simpan');
+    // btnSimpan.addEventListener('click', async function() {
+    //     let myForm = document.getElementById('myForm');
+    //     let dataForm = new FormData(myForm);
+    //     let status = await mf.postData(myForm.action, dataForm,'loading');
+    //     if (status == true) {
+    //         loadData();
+    //         $('#exampleModal').modal('hide');
+    //     }else{
+    //         notif.innerHTML = "";
+    //         for(let i = 0; i < status.length; i++){
+    //             notif.innerHTML += `
+    //                 <div class="alert alert-danger">${status[i]}</div>
+    //             `;
+    //         }
+    //     }
+    // })
 
-    document.addEventListener('click',async function(e) {
-        if (e.target.classList.contains('btn-tambah')) {
-            let myForm = document.getElementById('myForm');
-            myForm.setAttribute('action', '/api/alumni');
-            id.value = "";
-            nama.value = "";
-            alamat.value = "";
-            testimoni.value = "";
-            foto.value = "";
-            notif.innerHTML = "";
-            let date = new Date();
-            let th = date.getFullYear(); 
-            tahun.innerHTML = "";
-            for (let i = th; i > 1999; i--) {
-                tahun.innerHTML += `
-                    <option>${i}</option>
-                `;
-            }
-            foto2.src = "/storage/alumni/default.jpg";
-        }
-    });
+    // document.addEventListener('click',async function(e) {
+    //     if (e.target.classList.contains('btn-tambah')) {
+    //         let myForm = document.getElementById('myForm');
+    //         myForm.setAttribute('action', '/api/alumni');
+    //         id.value = "";
+    //         nama.value = "";
+    //         job.value = "";
+    //         alamat.value = "";
+    //         testimoni.value = "";
+    //         foto.value = "";
+    //         notif.innerHTML = "";
+    //         let date = new Date();
+    //         let th = date.getFullYear(); 
+    //         tahun.innerHTML = "";
+    //         for (let i = th; i > 1999; i--) {
+    //             tahun.innerHTML += `
+    //                 <option>${i}</option>
+    //             `;
+    //         }
+    //         foto2.src = "/storage/alumni/default.jpg";
+    //     }
+    // });
 
     
     document.addEventListener('click', async function(e) {
@@ -232,41 +238,42 @@
         }
     });
 
-    document.addEventListener('click', async function(e) {
-        if (e.target.classList.contains('btn-ubah')) {
-            let idAlumni = e.target.dataset.id;
-            let dataAlumni = await mf.getData('/api/alumni/detail/' + idAlumni);
-            id.value = dataAlumni.id;
-            nama.value = dataAlumni.nama;
-            alamat.value = dataAlumni.alamat;
-            testimoni.value = dataAlumni.testimoni;
-            notif.innerHTML = "";
-            foto.value = "";
-            if (dataAlumni.foto != null) {
-                foto2.src = '/storage/' + dataAlumni.foto;
-            } else {
-                foto2.src = '/storage/alumni/default.jpg';
-            }
+    // document.addEventListener('click', async function(e) {
+    //     if (e.target.classList.contains('btn-ubah')) {
+    //         let idAlumni = e.target.dataset.id;
+    //         let dataAlumni = await mf.getData('/api/alumni/detail/' + idAlumni);
+    //         id.value = dataAlumni.id;
+    //         nama.value = dataAlumni.nama;
+    //         job.value = dataAlumni.job;
+    //         alamat.value = dataAlumni.alamat;
+    //         testimoni.value = dataAlumni.testimoni;
+    //         notif.innerHTML = "";
+    //         foto.value = "";
+    //         if (dataAlumni.foto != null) {
+    //             foto2.src = '/storage/' + dataAlumni.foto;
+    //         } else {
+    //             foto2.src = '/storage/alumni/default.jpg';
+    //         }
 
-            let date = new Date();
-            let th = date.getFullYear(); 
-            tahun.innerHTML = "";
-            for (let i = th; i > 1999; i--) {
-                if (i == dataAlumni.tahun) {
-                    tahun.innerHTML += `
-                        <option selected>${i}</option>
-                    `;    
-                } else {
-                    tahun.innerHTML += `
-                        <option>${i}</option>
-                    `;
-                }
+    //         let date = new Date();
+    //         let th = date.getFullYear(); 
+    //         tahun.innerHTML = "";
+    //         for (let i = th; i > 1999; i--) {
+    //             if (i == dataAlumni.tahun) {
+    //                 tahun.innerHTML += `
+    //                     <option selected>${i}</option>
+    //                 `;    
+    //             } else {
+    //                 tahun.innerHTML += `
+    //                     <option>${i}</option>
+    //                 `;
+    //             }
                 
-            }
-            let myForm = document.getElementById('myForm');
-            myForm.setAttribute('action', '/api/alumni/' + dataAlumni.id);
-        }
-    });
+    //         }
+    //         let myForm = document.getElementById('myForm');
+    //         myForm.setAttribute('action', '/api/alumni/' + dataAlumni.id);
+    //     }
+    // });
 
     cari.addEventListener('keyup', async function() {
         if (cari.value == '') {

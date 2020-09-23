@@ -3,9 +3,11 @@
 
 @section('content')
 <h3 class="mb-30 col-12">Prestasi Santri</h3>
-<table class="table table-striped table-bordered" id="tabel-body">
-	
-</table>
+<div class="col-12"> 
+	<table class="table table-striped table-bordered" id="tabel-body">
+		
+	</table>
+</div>
 <!--================Blog Area =================-->
 
 @endsection
@@ -31,6 +33,7 @@
 					<th class="country">Kegiatan</th>
 					<th class="visit">Tahun</th>
 					<th class="percentage">Prestasi</th>
+					<th class="percentage">Action</th>
 				</tr>
 			</thead>
 	    `;
@@ -41,7 +44,10 @@
 					<td class="serial">${i + 1}</td>
 					<td>${data2[i].kegiatan}</td>
 					<td>${data2[i].tahun}</td>
-					<td>${data2[i].prestasi}</td>	
+					<td>${data2[i].prestasi}</td>
+					<td>
+						<a data-id="${data2[i].id}" href="/prestasi/gallery/${data2[i].id}" class="btn d-inline btn-sm btn-warning">Gallery</a>
+					</td>	
 				</tr>
 	        `;
 	    }

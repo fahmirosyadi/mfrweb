@@ -18,6 +18,7 @@ Route::get('/home', 'PagesController@index');
 Route::get('/eventDetails', 'PagesController@eventDetails');
 Route::get('/berita', 'PagesController@berita');
 Route::get('/alumni', 'PagesController@alumni');
+Route::get('/alumni/{id}', 'PagesController@detailAlumni');
 Route::get('/contact', 'PagesController@contact');
 Route::get('/organisasi', 'PagesController@organisasi');
 Route::get('/program', 'PagesController@program');
@@ -25,6 +26,7 @@ Route::get('/program/{id}', 'PagesController@detailProgram');
 Route::get('/ekstra', 'PagesController@ekstra');
 Route::get('/ekstra/{id}', 'PagesController@detailEkstra');
 Route::get('/prestasi', 'PagesController@prestasi');
+Route::get('/prestasi/gallery/{id}', 'PagesController@galleryPrestasi');
 Route::get('/berita', 'PagesController@berita');
 Route::get('/berita/{id}', 'PagesController@beritaDetails');
 Route::post('/send_email', 'PagesController@contactProcess');
@@ -74,6 +76,16 @@ Route::prefix('api/prestasi')->middleware(['auth','verified'])->group(function()
 	Route::get('search/{s}', 'PrestasiController@search')->withoutMiddleware(['auth','verified']);
 });
 
+Route::get('/admin/prestasi/gallery/{id}', 'GalleryController@index')->middleware(['auth','verified']);
+Route::prefix('api/gallery')->middleware(['auth','verified'])->group(function() {
+	Route::get('/{id}', 'GalleryController@all')->withoutMiddleware(['auth','verified']);
+	Route::get('detail/{id}', 'GalleryController@show');
+	Route::post('', 'GalleryController@store');
+	Route::get('delete/{id}', 'GalleryController@destroy');
+	Route::post('{id}', 'GalleryController@update');	
+	Route::get('search/{id}/{s}', 'GalleryController@search')->withoutMiddleware(['auth','verified']);
+});
+
 Route::get('/admin/contact', 'ContactController@index')->middleware(['auth','verified']);
 Route::prefix('api/contact')->middleware(['auth','verified'])->group(function() {
 	Route::get('', 'ContactController@all')->withoutMiddleware(['auth','verified']);
@@ -105,6 +117,11 @@ Route::prefix('api/kurikulum')->middleware(['auth','verified'])->group(function(
 });
 
 Route::get('/admin/alumni', 'AlumniController@index')->middleware(['auth','verified']);
+Route::get('/admin/alumni/create', 'AlumniController@create')->middleware(['auth','verified']);
+Route::get('/admin/alumni/edit/{id}', 'AlumniController@edit')->middleware(['auth','verified']);
+Route::post('/admin/alumni', 'AlumniController@store')->middleware(['auth','verified']);
+Route::post('/admin/alumni/update/{id}', 'AlumniController@update')->middleware(['auth','verified']);
+
 Route::prefix('api/alumni')->middleware(['auth','verified'])->group(function() {
 	Route::get('', 'AlumniController@all')->withoutMiddleware(['auth','verified']);
 	Route::get('detail/{id}', 'AlumniController@show');

@@ -1,15 +1,13 @@
 @extends('layouts/userlayout2')
 
 @section('content')
-<div class="row" id="content">
 
-</div>
 @endsection
 
 @section('js')
 <script type="text/javascript">
   let cari = document.getElementById('cari');
-  let content = document.getElementById('content');
+  let content = document.getElementById('single-post');
   let mf = new MyFetch();
 
   function isi(data){
@@ -18,7 +16,7 @@
       content.innerHTML += `
         <div class="col-md-6 mb-4">
           <div class="card" style="width: 100%;">
-            <img style="height: 200px" src="{{url('/storage/${data[i].foto}')}}" class="card-img-top" alt="...">
+            <img style="" src="{{url('/storage/${data[i].foto}')}}" class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title">${data[i].sarana}</h5>
               <a href="/sarana/${data[i].id}" class="btn btn-warning">Lihat Detail</a>

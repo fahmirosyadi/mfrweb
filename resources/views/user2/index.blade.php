@@ -249,9 +249,15 @@
                 <div class="col-lg-8">
                   <div class="testi_text">
                     <h4>{{$row->nama}}</h4>
+                    <!-- <h5>{{$row->job}}</h5> -->
                     <p>
-                      {{ $row->testimoni }}
+                      <?= substr($row->testimoni, 0, 200) ?>
                     </p>
+                  </div>
+                  <div class="text-center pt-lg-5 pt-3 float-right">
+                    <a href="{{url('/alumni/'.$row->id)}}" class="event-link">
+                      Lihat details<img src="{{('/user2/img/next.png')}}" alt="" />
+                    </a>
                   </div>
                 </div>
               </div>

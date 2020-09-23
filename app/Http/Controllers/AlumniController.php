@@ -33,16 +33,25 @@ class AlumniController extends Controller
         return $hasil;
     }
 
+    public function create()
+    {
+        $alumni = new Alumni;
+        return view('admin.alumni-form',['alumni' => $alumni,'tema' => Theme::find(1), 'title' => 'Alumni','action' =>'/admin/alumni']);
+    }
+
+    public function edit($id)
+    {
+        $alumni = Alumni::find($id);
+        return view('admin.alumni-form',['alumni' => $alumni, 'tema' => Theme::find(1), 'title' => 'Alumni','action' => '/admin/alumni/update/'.$id]);
+    }
+
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(),[
+        $request->validate([
             'nama' => 'required',
             'tahun' => 'required',
             'foto' => 'image|max:2048'
         ]);
-        if ($validator->fails()) {
-            return $validator->errors()->all();
-        }
         if ($request->file('foto')) {
             $foto = $request->file('foto')->store('alumni');
         } else {
@@ -50,24 +59,22 @@ class AlumniController extends Controller
         }
         Alumni::create([
             'nama' => $request->nama,
+            'job' => $request->job,
             'alamat' => $request->alamat,
             'foto' => $foto,
             'testimoni' => $request->testimoni,
             'tahun' => $request->tahun
         ]);
-        return true;
+        return redirect('/admin/alumni');
     }
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(),[
+        $request->validate([
             'nama' => 'required',
             'tahun' => 'required',
             'foto' => 'image|max:2048'
         ]);
-        if ($validator->fails()) {
-            return $validator->errors()->all();
-        }
         $alumni = Alumni::find($id);
         if ($request->file('foto')) {
             \Storage::delete($alumni->foto);
@@ -77,12 +84,13 @@ class AlumniController extends Controller
         }
         Alumni::where('id', $id)->update([
             'nama' => $request->nama,
+            'job' => $request->job,
             'alamat' => $request->alamat,
             'tahun' => $request->tahun,
             'testimoni' => $request->testimoni,
             'foto' => $foto
         ]);
-        return true;
+        return redirect('/admin/alumni');
     }
 
     public function destroy($id)

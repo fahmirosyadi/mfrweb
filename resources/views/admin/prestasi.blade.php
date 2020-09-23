@@ -126,6 +126,7 @@
                     <td class="text-center">${data2[i].prestasi}</td>
                     <td class="text-center">
                         <a data-toggle="modal" data-id="${data2[i].id}" data-target="#exampleModal" class="d-inline btn btn-sm btn-success text-white btn-ubah">Ubah</a>
+                        <a data-id="${data2[i].id}" href="/admin/prestasi/gallery/${data2[i].id}" class="btn d-inline btn-sm btn-warning">Gallery</a>
                         <a data-id="${data2[i].id}" class="btn d-inline btn-sm btn-danger btn-hapus">Hapus</a>
                     </td>
                 </tr>
