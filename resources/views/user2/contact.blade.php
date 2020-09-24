@@ -28,6 +28,17 @@
     </div>
   </div>
   <div class="col-lg-9">
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+            <div class="alert alert-danger">{{$error}}</div>
+        @endforeach
+    @endif
+
+    @if ($message = Session::get('success'))
+      <div class="alert alert-success alert-block">
+          {{ $message }}
+      </div>
+    @endif
     <form
       class="row contact_form"
       action="{{url('/send_email')}}"

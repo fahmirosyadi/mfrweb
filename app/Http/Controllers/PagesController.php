@@ -138,6 +138,13 @@ class PagesController extends Controller
     }
 
     public function contactProcess(Request $request) {
+
+        $request->validate([
+            'name' => 'required',
+            'email' => 'email',
+            'subject' => 'required'
+        ]);
+
     	Mail::send('user2.contact_process',[
 			'from' => $request->email,
 			'name' => $request->name,
@@ -147,7 +154,7 @@ class PagesController extends Controller
     		$mail->from(env('MAIL_FROM_ADDRESS'),$request->name);
     		$mail->to('rosyadif26@gmail.com')->subject($request->subject);
     	});
-    	return 'Berhasil!!!';
+    	return redirect('/contact')->with(['success' => 'Berhasil terkirim']);
     }
 
     public function daftar() {
