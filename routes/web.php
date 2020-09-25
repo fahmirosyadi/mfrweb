@@ -152,7 +152,7 @@ Route::get('/admin/user/profile/{id}', 'UserController@profile')->middleware(['a
 Route::get('/admin/user/ubahPassword/{id}', 'UserController@ubahPassword')->middleware(['auth','verified']);
 Route::prefix('api/user')->middleware('admin')->group(function() {
 	Route::get('', 'UserController@all')->withoutMiddleware('admin');
-	Route::get('detail/{id}', 'UserController@show');
+	Route::get('detail/{id}', 'UserController@show')->withoutMiddleware('admin');
 	Route::post('', 'UserController@store');
 	Route::get('delete/{id}', 'UserController@destroy');
 	Route::post('{id}', 'UserController@update');
