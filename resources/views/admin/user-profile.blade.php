@@ -32,7 +32,9 @@
                 </div>
                 <div class="border-top">
                     <div class="card-body">
-                        <button type="button" id="btn-simpan" class="btn btn-success">Simpan</button>                    </div>
+                        <button type="submit" class="btn btn-success">Simpan</button>
+                        <img id="loading" style="visibility: hidden;" height="40" src="{{ url('/images/loading.gif') }}">
+                    </div>
                 </div>
             </form>
         </div>
@@ -123,7 +125,7 @@
     btnSimpan.addEventListener('click', async function() {
         let mForm = document.getElementById('myForm');
         let dataForm = new FormData(myForm);
-        let status = await mf.postData(myForm.action, dataForm);
+        let status = await mf.postData(myForm.action, dataForm,'loading');
         if (status == true) {
             notif.innerHTML = `
                 <div class="alert alert-success">Berhasil disimpan</div>
