@@ -56,7 +56,7 @@
           <div class="modal-footer">
             <img id="loading" style="visibility: hidden;" height="40" src="{{ url('/images/loading.gif') }}">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>
-            <button type="submit" class="btn btn-primary">Simpan</button>
+            <button type="button" id="btn-simpan" class="btn btn-primary">Simpan</button>
           </div>
       </form>
     </div>

@@ -32,7 +32,7 @@
                 </div>
                 <div class="border-top">
                     <div class="card-body">
-                        <button type="submit" class="btn btn-success">Simpan</button>
+                        <button type="button" id="btn-simpan" class="btn btn-success">Simpan</button>
                         <img id="loading" style="visibility: hidden;" height="40" src="{{ url('/images/loading.gif') }}">
                     </div>
                 </div>
