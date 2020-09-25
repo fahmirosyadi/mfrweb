@@ -25,7 +25,7 @@
             <div class="form-group row">
                 <label for="email" class="col-sm-3 text-right control-label col-form-label">Email</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="email" name="email" readonly="false">
+                    <input type="text" class="form-control" id="email" name="email">
                 </div>
             </div>
             <div class="form-group row" id="fpassword">
@@ -224,6 +224,7 @@
             pass_confir.value = "";
             notif.innerHTML = "";
             foto2.src = "/storage/user/default.jpg";
+            email.readOnly = false;
         }
     });
 
@@ -264,6 +265,7 @@
             fpass.setAttribute('style','visibility:hidden');
             fpass_confir.setAttribute('style','visibility:hidden');
             foto.value = "";
+            email.readOnly = true;
             if (dataUser.foto != null) {
                 foto2.src = '/storage/' + dataUser.foto;
             } else {
