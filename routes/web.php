@@ -150,14 +150,14 @@ Route::prefix('api/berita')->middleware(['auth','verified'])->group(function() {
 Route::get('/admin/user', 'UserController@index')->middleware(['auth','verified','admin']);
 Route::get('/admin/user/profile/{id}', 'UserController@profile')->middleware(['auth','verified']);
 Route::get('/admin/user/ubahPassword/{id}', 'UserController@ubahPassword')->middleware(['auth','verified']);
-Route::prefix('api/user')->middleware('admin')->group(function() {
+Route::prefix('api/user')->middleware(['auth','verified','admin'])->group(function() {
 	Route::get('', 'UserController@all')->withoutMiddleware('admin');
 	Route::get('detail/{id}', 'UserController@show')->withoutMiddleware('admin');
 	Route::post('', 'UserController@store');
 	Route::get('delete/{id}', 'UserController@destroy');
 	Route::post('{id}', 'UserController@update');
 	Route::get('/toAdmin/{id}', 'UserController@toAdmin');
-	Route::post('/updatePassword/{id}', 'UserController@updatePassword');
+	Route::post('/updatePassword/{id}', 'UserController@updatePassword')->withoutMiddleware('admin');
 	Route::get('search/{s}', 'UserController@search')->withoutMiddleware(['auth','verified']);
 });
 
