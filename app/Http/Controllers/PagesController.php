@@ -151,7 +151,7 @@ class PagesController extends Controller
 			'subject' => $request->subject,
 			'cmessage' => $request->message
     	], function($mail) use($request) {
-    		$mail->from("rosyadif26@gmail.com",$request->name);
+    		$mail->from(env('MAIL_FROM_ADDRESS'),$request->name);
     		$mail->to('rosyadif26@gmail.com')->subject($request->subject);
     	});
     	return redirect('/contact')->with(['success' => 'Berhasil terkirim']);
