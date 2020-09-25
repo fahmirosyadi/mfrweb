@@ -138,7 +138,7 @@ class PagesController extends Controller
     }
 
     public function contactProcess(Request $request) {
-        return env('DB_DATABASE');
+        return env('APP_NAME');
         $request->validate([
             'name' => 'required',
             'email' => 'email',
