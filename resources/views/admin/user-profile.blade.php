@@ -27,7 +27,7 @@
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="text" id="email" name="email" class="form-control">
+                        <input type="text" id="email" name="email" class="form-control" readonly="">
                     </div>
                 </div>
                 <div class="border-top">
