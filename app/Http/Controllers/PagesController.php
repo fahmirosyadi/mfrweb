@@ -138,7 +138,6 @@ class PagesController extends Controller
     }
 
     public function contactProcess(Request $request) {
-        return env('APP_NAME');
         $request->validate([
             'name' => 'required',
             'email' => 'email',
@@ -152,7 +151,7 @@ class PagesController extends Controller
 			'cmessage' => $request->message
     	], function($mail) use($request) {
     		$mail->from(env('MAIL_FROM_ADDRESS'),$request->name);
-    		$mail->to('rosyadif26@gmail.com')->subject($request->subject);
+    		$mail->to(env('MAIL_FROM_ADDRESS'))->subject($request->subject);
     	});
     	return redirect('/contact')->with(['success' => 'Berhasil terkirim']);
     }
