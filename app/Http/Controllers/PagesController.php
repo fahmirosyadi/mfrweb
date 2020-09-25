@@ -138,6 +138,7 @@ class PagesController extends Controller
     }
 
     public function contactProcess(Request $request) {
+        return env("MAIL_PASSWORD");
         $request->validate([
             'name' => 'required',
             'email' => 'email',
