@@ -169,7 +169,7 @@
                             <a class="dropdown-item" href="{{ url('/admin/user/ubahPassword/'.auth()->user()->id) }}"><i class="ti-settings m-r-5 m-l-5"></i> <label>Ubah password</label></a>
                             <div class="dropdown-divider"></div>
                             <div class="row">
-                                <div class="p-l-30 p-10 col-6"><a href="{{url('/admin/user/profile/'.auth()->user()->id)}}" class="btn btn-sm btn-success btn-rounded">View Profile</a></div>
+                                <div class="p-l-30 p-10 col-6"><a href="{{url('/admin/user/profile')}}" class="btn btn-sm btn-success btn-rounded">View Profile</a></div>
                             </div>
                         </div>
                     </li>
