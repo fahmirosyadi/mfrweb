@@ -149,7 +149,7 @@ Route::prefix('api/berita')->middleware(['auth','verified'])->group(function() {
 
 Route::get('/admin/user', 'UserController@index')->middleware(['auth','verified','admin']);
 Route::get('/admin/user/profile', 'UserController@profile')->middleware(['auth','verified']);
-Route::get('/admin/user/ubahPassword/{id}', 'UserController@ubahPassword')->middleware(['auth','verified']);
+Route::get('/admin/user/ubahPassword', 'UserController@ubahPassword')->middleware(['auth','verified']);
 Route::prefix('api/user')->middleware(['auth','verified','admin'])->group(function() {
 	Route::get('', 'UserController@all')->withoutMiddleware('admin');
 	Route::get('detail/{id}', 'UserController@show')->withoutMiddleware('admin');
