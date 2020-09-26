@@ -21,8 +21,8 @@ class UserController extends Controller
         return view('admin.user-index',['tema' => Theme::find(1), 'title' => 'User']);
     }
 
-    public function profile($id) {
-        return view('admin.user-profile',['tema' => Theme::find(1), 'title' => 'User', 'idUser' => $id]);
+    public function profile() {
+        return view('admin.user-profile',['tema' => Theme::find(1), 'title' => 'User', 'idUser' => auth()->user()->id]);
     }
 
     public function ubahPassword($id) {
