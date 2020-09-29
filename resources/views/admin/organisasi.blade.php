@@ -110,31 +110,31 @@
             try {
                 if (simpan) {
             	    let ambil = await mf.getData('/api/organisasi/detail/' + that.nodeId);
-                	try {
-                        if (ambil == null) {
-                            console.log('Ambil null!!!');
-                        }else {
-                            let hasil = ambil;
-                    		var node = chart.get(that.nodeId);
-    	                	node.name = hasil.name;
-    	                	node.title = hasil.title;
-                            if (hasil.pid == null) {
-                                node.pid = "";
-                                node.tags = "";
-                            } else {
-    	                       node.pid = hasil.pid;
-    	                       node.tags = [hasil.tags];
-                            }
-                            if (hasil.photo1 == null) {
-                                node.photo1 = '/organisasi/default.jpg';
-                            } else {
-                                node.photo1 = hasil.photo1;
-                            }
-    	                	chart.updateNode(node);
-                        }
-                	} catch(e) {
-                		console.log('Gagal Load dari /api/organisasi/detail/' + that.nodeId + ' : ' + e)
-                	}
+                    let hasil = ambil;
+            		var node = chart.get(that.nodeId);
+                	node.name = hasil.name;
+                	node.title = hasil.title;
+                    if (hasil.pid == null) {
+                        node.pid = "";
+                        node.tags = "";
+                    } else {
+                       node.pid = hasil.pid;
+                       node.tags = [hasil.tags];
+                    }
+                    if (hasil.photo1 == null) {
+                        node.photo1 = '/organisasi/default.jpg';
+                    } else {
+                        node.photo1 = hasil.photo1;
+                    }
+                	chart.updateNode(node);
+                	// try {
+                 //        if (ambil == null) {
+                 //            console.log('Ambil null!!!');
+                 //        }else {
+                 //        }
+                	// } catch(e) {
+                	// 	console.log('Gagal Load dari /api/organisasi/detail/' + that.nodeId + ' : ' + e)
+                	// }
                 }
             } catch (e){
             	console.log("Gagal Menyimpan");
