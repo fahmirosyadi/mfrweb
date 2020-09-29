@@ -112,7 +112,7 @@
             	    let ambil = await mf.getData('/api/organisasi/detail/' + that.nodeId);
                 	try {
                         if (ambil == null) {
-                            alert('Ambil null!!!');
+                            console.log('Ambil null!!!');
                         }else {
                             let hasil = ambil;
                     		var node = chart.get(that.nodeId);
@@ -133,7 +133,7 @@
     	                	chart.updateNode(node);
                         }
                 	} catch(e) {
-                		alert('Gagal Load dari /api/organisasi/detail/' + that.nodeId + ' : ' + e)
+                		console.log('Gagal Load dari /api/organisasi/detail/' + that.nodeId + ' : ' + e)
                 	}
                 }
             } catch (e){
