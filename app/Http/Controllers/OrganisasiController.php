@@ -31,7 +31,7 @@ class OrganisasiController extends Controller
     public function show($id)
     {
         $hasil = Organisasi::find($id);
-        return json_encode($hasil);
+        return ($hasil);
     }
 
     public function store(Request $request)
@@ -86,6 +86,10 @@ class OrganisasiController extends Controller
     public function destroy($id)
     {
         $organisasi = Organisasi::find($id);
+        $cekBawahan = Organisasi::where('pid',$id)->get();
+        if (count($cekBawahan) > 0) {
+            return ['status' => 'fail','message' => 'Anda tidak dapat menghapus atasan'];
+        }
         \Storage::delete($organisasi->photo1);
         Organisasi::destroy($id);
         return ['status' => 'ok'];

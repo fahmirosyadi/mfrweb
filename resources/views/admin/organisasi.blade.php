@@ -109,24 +109,28 @@
             let simpan = await mf.postData(form.action,data);
             try {
                 if (simpan) {
-            	    let ambil = await mf.getData('/api/organisasi/detail/' + that.nodeId);
-                    let hasil = ambil;
-            		var node = chart.get(that.nodeId);
-                	node.name = hasil.name;
-                	node.title = hasil.title;
-                    if (hasil.pid == null) {
-                        node.pid = "";
-                        node.tags = "";
-                    } else {
-                       node.pid = hasil.pid;
-                       node.tags = [hasil.tags];
+            	    let ambil = await mf.getData('/api/organisasi/detail/' + data.get('id'));
+                    if (ambil == null) {
+                        alert("Gagal mengambil data!");
+                    }else{
+                        let hasil = ambil;
+                		var node = chart.get(data.get('id'));
+                    	node.name = hasil.name;
+                    	node.title = hasil.title;
+                        if (hasil.pid == null) {
+                            node.pid = "";
+                            node.tags = "";
+                        } else {
+                           node.pid = hasil.pid;
+                           node.tags = [hasil.tags];
+                        }
+                        if (hasil.photo1 == null) {
+                            node.photo1 = '/organisasi/default.jpg';
+                        } else {
+                            node.photo1 = hasil.photo1;
+                        }
+                    	chart.updateNode(node);
                     }
-                    if (hasil.photo1 == null) {
-                        node.photo1 = '/organisasi/default.jpg';
-                    } else {
-                        node.photo1 = hasil.photo1;
-                    }
-                	chart.updateNode(node);
                 	// try {
                  //        if (ambil == null) {
                  //            console.log('Ambil null!!!');
@@ -173,11 +177,13 @@
             parent.innerHTML = "";
             let dataParent = await mf.getData('/api/organisasi/' + pp.value);
             for (var i = 0; i < dataParent.length; i++) {
-            	if (dataParent[i].id == node.pid) {
-            		parent.innerHTML += `<option selected value='${dataParent[i].id}'>${dataParent[i].name}</option>`;
-            	} else {
-            		parent.innerHTML += `<option value='${dataParent[i].id}'>${dataParent[i].name}</option>`;
-            	}
+                if (dataParent[i].id != nodeId) {
+                	if (dataParent[i].id == node.pid) {
+                		parent.innerHTML += `<option selected value='${dataParent[i].id}'>${dataParent[i].name}</option>`;
+                	} else {
+                		parent.innerHTML += `<option value='${dataParent[i].id}'>${dataParent[i].name}</option>`;
+                	}
+                }
             	
             }
             let pilTags = document.getElementById('tags');
@@ -232,10 +238,14 @@
 	            }
 	        }
         });
-        chart.on('remove', function (sender, nodeId) {
+        chart.on('remove', async function (sender, nodeId) {
             let yakin = confirm("Yakin ingin hapus?");
             if (yakin) {
-                mf.deleteData('/api/organisasi/delete/' + nodeId);
+                let result = await mf.deleteData('/api/organisasi/delete/' + nodeId);
+                if (result.status == 'fail') {
+                    alert(result.message);
+                    loadChart();
+                }
             }
         });
     	let pilihPeriode = document.getElementById('select-periode');
