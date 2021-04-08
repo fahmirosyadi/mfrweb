@@ -51,8 +51,8 @@
                             <label class="col-3" style="color:#ffffff; width:50px; display:inline-block;" for="title">Foto</label>
                             <input class="col" type="file" name="photo1" id="photo1"/>
                         </div>
-                        <!--<input type="checkbox" class="form-control" name="hapus">Hapus Foto-->
-                        <input type="hidden" name="periode" id="periode">
+                        <input type="checkbox" class="form-control" name="hapus">Hapus Foto
+                        <input type="text" name="periode" id="periode">
                         <div style="padding: 5px 0 15px 0;">
                             <button type="button" style="width:108px;" id="cancel">Cancel</button>
                             <button type="button" style="width:108px;" id="save">Save</button>
@@ -169,12 +169,10 @@
         let pp = document.getElementById('select-periode');
         document.getElementById('periode').value = pp.value;
         document.getElementById('photo1').value = "";
-        if (node.pid == null || node.pid == "") {
-            // alert("PID NULL");
+        if (node.pid == null) {
             document.getElementById('pid').innerHTML = "";
             document.getElementById('tags').innerHTML = "";
         } else {
-            alert(node.pid);
             let parent = document.getElementById('pid');
             parent.innerHTML = "";
             let dataParent = await mf.getData('/api/organisasi/' + pp.value);
